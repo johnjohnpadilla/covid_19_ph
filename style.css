@@ -346,20 +346,4 @@ stButton-exit{
     background-color: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
 }
 
-.stDeckGlChart #deckgl-overlay{
-    width: 1510px !important;
-    height: 650px !important;
-    #width: 240% !important;
-    #height: 240% !important;
-    position: relative !important;
-    margin-right: 50px !important
-    align-items: none !important;
-}
-.deckglchart {
-    #width: 1200px !important;
-    #height: 880px !important;
-    width: 1510px !important;
-    height: 650px !important;
-    position: relative !important;
-    left: -400px !important
-}
+

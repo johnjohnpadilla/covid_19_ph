@@ -114,9 +114,9 @@ def main():
                     #nearest_case_plot = pd.DataFrame(np.array([[nearest_case_lat, nearest_case_lon]]))
                     #st.dataframe(nearest_case_plot)
                     if nearest_case < 10.0:
-                        st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: red; color: white; border: 1px solid white;'><b>DISTANCE TO NEAREST CONFIRMED CASE : " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                        st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
                     else:
-                        st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: green; color: white; border: 1px solid white;'><b>DISTANCE TO NEAREST CONFIRMED CASE : " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                        st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: green; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
 
 
                 st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
@@ -214,9 +214,9 @@ def main():
         #if nearest_case != None and nearest_case < 10.0:
         if nearest_case != None:
             if nearest_case < 10.0:
-                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: red; color: white; border: 1px solid white;'><b>DISTANCE TO NEAREST CONFIRMED CASE : " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
             else:
-                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: green; color: white; border: 1px solid white;'><b>DISTANCE TO NEAREST CONFIRMED CASE : " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: green; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
 
         if my_loc_lat and my_loc_long:
             # covid-19 map
