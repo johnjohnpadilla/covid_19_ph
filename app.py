@@ -121,7 +121,6 @@ def main():
 
                 st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
                 st.write("\n")
-                st.dataframe(df_covid_19_cases_loc_latest)
                 st.deck_gl_chart(
                     viewport={
                         'latitude': user_location.latitude,
@@ -134,13 +133,14 @@ def main():
                     },
                     layers=[{
                         'type': 'HexagonLayer',
-                        'data': df_covid_19_cases_loc_latest.head(),
+                        'data': df_covid_19_cases_loc_latest,
                         'radius': 400,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
                         'pickable': True,
                         'extruded': True,
-                        'getFillColor': [255, 8, 0],
+                        'getFillColor': [255, 8, 0]
+                    },
                         #'getFillColor': (300, 300, 180, 200)
                         #'getFillColor': [50, 100, 50] green
                         #'getFillColor': [248, 24, 148]
@@ -153,7 +153,7 @@ def main():
                 #     'pickable': True,
                 #     'extruded': True,
                 #     'getFillColor': [100,100,100]
-                 }, {
+                 {
                     'type': 'ScatterplotLayer',
                     'data': df_my_loc,
                     'radius': 1000,
@@ -165,17 +165,17 @@ def main():
                     'pickable': True,
                     'extruded': True,
                     'getFillColor': [30,144,255]
+                },{
+                    'type': 'ScatterplotLayer',
+                    'data': df_covid_19_cases_loc_latest,
+                    'radius': 400,
+                    'elevationScale': 4,
+                    'elevationRange': [0, 1000],
+                    'pickable': True,
+                    'extruded': True,
+                    'getFillColor': [255, 8, 0]
                 }
-                #         , {
-                #     'type': 'ScatterplotLayer',
-                #     'data':  nearest_case_plot,
-                #     'radius': 500,
-                #     'elevationScale': 4,
-                #     'elevationRange': [0, 1000],
-                #     'pickable': True,
-                #     'extruded': True,
-                #     'getFillColor': [30,144,255]
-                # }
+
                     ])
                 st.write("\n")
                 st.write("\n")
