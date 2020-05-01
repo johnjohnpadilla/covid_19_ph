@@ -69,7 +69,7 @@ def main():
     df_covid_19_cases_latest = getCovid19CasesLatest()
     df_covid_19_cases_loc_latest = df_covid_19_cases_latest[['latitude', 'longitude']]
     if(df_covid_19_cases_loc_latest['latitude'].isnull().values.any()):
-        df_covid_19_cases_loc_latest = df_covid_19_cases
+        df_covid_19_cases_loc_latest = df_covid_19_cases[['latitude', 'longitude']]
     #st.dataframe(df_covid_19_cases_loc_latest)
 
     if choice == "Search Location":
@@ -121,6 +121,7 @@ def main():
 
                 st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
                 st.write("\n")
+                #st.dataframe(df_covid_19_cases_loc_latest)
                 st.deck_gl_chart(
                     viewport={
                         'latitude': user_location.latitude,
@@ -153,7 +154,6 @@ def main():
                 #     'extruded': True,
                 #     'getFillColor': [100,100,100]
                  }, {
-                    'id': "scat-blue",
                     'type': 'ScatterplotLayer',
                     'data': df_my_loc,
                     'radius': 1000,
