@@ -121,7 +121,7 @@ def main():
 
                 st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
                 st.write("\n")
-                #st.dataframe(df_covid_19_cases_loc_latest)
+                st.dataframe(df_covid_19_cases_loc_latest)
                 st.deck_gl_chart(
                     viewport={
                         'latitude': user_location.latitude,
@@ -134,7 +134,7 @@ def main():
                     },
                     layers=[{
                         'type': 'HexagonLayer',
-                        'data': df_covid_19_cases_loc_latest,
+                        'data': df_covid_19_cases_loc_latest.head(),
                         'radius': 400,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
