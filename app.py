@@ -2,15 +2,11 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-import json
 import streamlit as st
 import plotly.express as px
 from geopy.geocoders import Nominatim
 import geocoder
 from geopy.distance import geodesic
-from geopy.geocoders import GoogleV3
-import altair as alt
-from vega_datasets import data
 
 def local_css(file_name):
     with open(file_name) as f:
