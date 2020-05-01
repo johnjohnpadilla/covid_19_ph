@@ -81,9 +81,9 @@ def main():
         showDistance = st.checkbox('Compare Distance')
         nearest_case_lat: None;
         nearest_case_lon: None;
-        locator = Nominatim(user_agent="myGeocoder")
-        if submitButton:
 
+        if submitButton:
+            locator = Nominatim(user_agent="myGeocoder")
             user_location = locator.geocode(user_address)
            # st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>LOCATION:</b></span>",unsafe_allow_html=True)
             st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span><br>",unsafe_allow_html=True)
