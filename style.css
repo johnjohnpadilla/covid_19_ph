@@ -1,0 +1,343 @@
+body {
+    #color: #ffffff;
+    #background-color: #001a33;
+    #background-image: linear-gradient(rgb(1, 3, 5),rgb(78, 123, 179),rgb(57, 84, 116),rgb(80, 124, 179),rgb(1, 3, 5)) !important;
+}
+.main {
+    #color: #ffffff;
+    #background-color: #001a33;
+    opacity: 0.95;
+    #background-image: linear-gradient(to right, rgb(1, 3, 5),rgb(78, 123, 179),rgb(57, 84, 116),rgb(80, 124, 200),rgb(1, 3, 5)) !important;
+    background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+}
+.sidebar .sidebar-content{
+    #background-color: #001a33 !important;
+    opacity: 0.9;
+    #background: rgba(0,0,0, 0.9) !important;
+    #background: rgba(0, 0, 0, 0.7);
+    #background: rgba(255, 255, 255, 0.7);
+    background: #001a33 !important;
+    background-image: none !important:
+    border: 1px solid black !important;
+    box-shadow: 0 0 15px rgb(179, 182, 180);
+}
+.stDataFrame {
+    color: white !important;
+    #background:none;
+    border: 1px solid white !important;
+}
+.stButton>button {
+    color: white;
+    background:none;
+    border: 1px solid white !important;
+}
+.stButton>button:visited {
+    color: white;
+    #border-color: white !important;
+    #background: blue;
+}
+.stButton>button:focus {
+    color: white;
+    #border-color: white !important;
+    background: #001a33;
+}
+.stButton>button:hover {
+    color: white;
+    border-color: white !imporant;
+    background: black;
+
+}
+.stButton>button:active {
+    color: black;
+    border-color: black;
+    background: black;
+}
+.stTextInput>div>label {
+    color: white !important;
+}
+.stTextInput>div>div>input {
+    color: black;
+}
+.stTextInput>div>div>input:visited {
+    color: black;
+    box-shadow: none;
+}
+.stTextInput>div>div>input:focus {
+    color: black;
+    box-shadow: none;
+    outline: none;
+}
+.stTextInput>div>div>input:hover {
+    color: black;
+    box-shadow: none;
+    width: 1500px;
+}
+.stTextInput>div>div>input:active    {
+    color: black;
+    box-shadow: none;
+    width: 1500px;
+}
+.d5:focus {
+    box-shadow: none;
+}
+.e3:focus{
+    box-shadow: none;
+    border-color:none;
+}
+.e2{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.e2:focus{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.e3 .cd{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.e3:focus .cd:focus{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.cd{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.cd:focus{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+
+.es{
+    box-shadow:none;
+    background-color: black !important;
+}
+.es:focus{
+    box-shadow:none;
+    background-color: black !important;
+}
+
+.e6{
+    box-shadow:none;
+    background-color: black !important;
+}
+.e6:focus{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.e7{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+.e7:focus{
+    box-shadow: none;
+    border-color:black !important;
+    border-top-color:black !important;
+    border-bottom-color:black !important;
+    border-left-color:black !important;
+    border-right-color:black !important;
+}
+
+.stSelectbox>div>select    {
+    border-color:none;
+    width:500px !important;
+}
+.stSelectbox>div>select:active    {
+    border-color:none;
+}
+.stSelectbox>div>select:focus    {
+    border-color:none;
+}
+.btn-outline-secondary{
+    #color: #0096fe !important;
+    color: white !important;
+    opacity: 1.0 !important;
+}
+.btn-outline-secondary:focus{
+    color: #0096fe !important;
+    border-color: white !important;
+}
+.btn-outline-secondary:active{
+    color: #0096fe !important;
+    border-color: white !important;
+}
+.btn-outline-secondary:visited{
+    color: #0096fe !important;
+    border-color: white !important;
+}
+.btn-outline-secondary:hover{
+    color: #0096fe !important;
+    border-color: white !important;
+}
+.btn-outline-info .btn-outline-secondary{
+    #background-color: black !important;
+    border-color: black !important;
+    color: blue;
+}
+.btn-outline-info:active{
+    background-color: black !important;
+    border-color: black !important;
+    box-shadow: 0 0 8px rgb(179, 182, 180);
+}
+.btn-outline-info:hover{
+    background-color: white !important;
+    border-color: black !important;
+    box-shadow: 0 0 8px rgb(179, 182, 180);
+    color: blue;
+}
+sidebar-close btn btn-outline-secondary {
+    color: blue !important;
+}
+sidebar-close btn btn-outline-secondary {
+    color: blue !important;
+}
+.btn-outline-info:not(:disabled):not(.disabled):focus, .btn-outline-info:not(:disabled):not(.disabled):hover, .btn-outline-primary:not(:disabled):not(.disabled):focus, .btn-outline-primary:not(:disabled):not(.disabled):hover, .btn-outline-secondary:not(:disabled):not(.disabled):focus, .btn-outline-secondary:not(:disabled):not(.disabled):hover {
+    background-color: white;
+    border-color: black;
+    color: blue;
+    box-shadow: 0 0 20px rgb(179, 182, 180);
+}
+.Widget>label{
+    color: white !important
+}
+
+.dataframe data{
+    color: white !important
+}
+.do dz ay ae af ag e0{
+    color: white !important;
+}
+
+.stCheckbox .ay{
+    color: white;
+}
+.stCheckbox .ay:active{
+    background:none !important;
+}
+.stCheckbox .ay:focus{
+    background:none !important;
+}
+
+.stCheckbox .e5{
+    background-color: black !important;
+}
+.stCheckbox .e5:active{
+    background-color: black !important;
+}
+.stCheckbox .e5:focus{
+    background-color: black !important;
+}
+
+.stSelectbox .ay {
+    background-color: #001a33;
+    color:white;
+    border: 1px solid white;
+    opacity: 0.8;
+}
+
+#background checkbox
+.stCheckbox .cf{
+    background-color: none !important;
+    background: none !important;
+}
+.stCheckbox .cf:active{
+    background-color: none !important;
+    background: none !important;
+}
+.stCheckbox .cf:hover{
+    background-color: none !important;
+    background: none !important;
+}
+
+.stCheckbox .ce{
+    background-color: none !important;
+    background: none !important;
+}
+.stCheckbox .ce:active{
+    background-color: none !important;
+    background: none !important;
+}
+.stCheckbox .ce:hover{
+    background-color: none !important;
+    background: none !important;
+}
+#background check box
+
+.stSelectbox .ay:hover {
+
+    background-color: #4596E6;
+    border: 1px solid white;
+    color:  #17a2b !important;
+    opacity: 0.9;
+}
+stButton-exit{
+    color: blue !important!;
+}
+.stDataFrame {
+    background:#001a33 !important;
+    color: white !important;
+    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    align-items: center !important!;
+}
+.stDataFrame .row-header{
+    background:#001a33 !important;
+    color: white !important;
+}
+.stDataFrame .col-header{
+    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    color: white !important;
+}
+.stDataFrame .corner{
+    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+}
+
+.stPlotlyChart .main-svg{
+    background-color: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+}
+
+.stDeckGlChart #deckgl-overlay{
+    width: 1510px !important;
+    height: 880px !important;
+    position: relative !important;
+    margin-right: 50px !important
+    align-items: none !important;
+}
+.deckglchart {
+    width: 1200px !important;
+    height: 880px !important;
+    position: relative !important;
+    left: -400px !important
+}
