@@ -268,8 +268,26 @@ sidebar-close btn btn-outline-secondary {
     opacity: 0.8;
 }
 
+.stSelectbox .ay:hover {
+    background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    color:white;
+    border: 1px solid white;
+    opacity: 0.8;
+}
+.ea:hover{
+background-color: blue !important;
+}
+.bo:hover{
+    background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    opacity: 1.3 !important;
+}
+
 #background checkbox
 .stCheckbox .cf{
+    background-color: none !important;
+    background: none !important;
+}
+.stCheckbox .cf:visited{
     background-color: none !important;
     background: none !important;
 }
@@ -300,7 +318,7 @@ sidebar-close btn btn-outline-secondary {
 
     background-color: #4596E6;
     border: 1px solid white;
-    color:  #17a2b !important;
+    color:  blue !important;
     opacity: 0.9;
 }
 stButton-exit{
@@ -329,15 +347,19 @@ stButton-exit{
 }
 
 .stDeckGlChart #deckgl-overlay{
-    width: 1510px !important;
-    height: 880px !important;
+    #width: 1510px !important;
+    #height: 880px !important;
+    width: 240% !important;
+    height: 240% !important;
     position: relative !important;
     margin-right: 50px !important
     align-items: none !important;
 }
 .deckglchart {
-    width: 1200px !important;
-    height: 880px !important;
+    #width: 1200px !important;
+    #height: 880px !important;
+    width: 90% !important;
+    height: 50%px !important;
     position: relative !important;
     left: -400px !important
 }

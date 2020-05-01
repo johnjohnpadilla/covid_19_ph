@@ -81,8 +81,9 @@ def main():
         showDistance = st.checkbox('Compare Distance')
         nearest_case_lat: None;
         nearest_case_lon: None;
+        locator = Nominatim(user_agent="myGeocoder")
         if submitButton:
-            locator = Nominatim(user_agent="myGeocoder")
+
             user_location = locator.geocode(user_address)
            # st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>LOCATION:</b></span>",unsafe_allow_html=True)
             st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span><br>",unsafe_allow_html=True)
@@ -98,7 +99,8 @@ def main():
                         covid_19_patient_loc = (row.latitude, row.longitude)
                         user_loc = (user_location.latitude, user_location.longitude)
                         distance = geodesic(user_loc, covid_19_patient_loc).km
-                        if distance < 10.0:
+                        #if distance < 10.0:
+                        if distance:
                             if nearest_case is None:
                                 nearest_case = distance
                             else:
@@ -127,7 +129,7 @@ def main():
                         # 'longitude': my_loc_long,
                         'zoom': 11,
                         'pitch': 40,
-                        'mapStyle' : 'mapbox://styles/mapbox/dark-v10'
+                        'mapStyle': 'mapbox://styles/mapbox/dark-v10'
                     },
                     layers=[{
                         'type': 'HexagonLayer',
