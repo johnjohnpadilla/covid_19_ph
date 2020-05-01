@@ -133,9 +133,8 @@ def main():
                     },
                     layers=[{
                         'type': 'HexagonLayer',
-                        #'type': 'ScatterplotLayer',
                         'data': df_covid_19_cases_loc_latest,
-                        'radius': 500,
+                        'radius': 400,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
                         'pickable': True,

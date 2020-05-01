@@ -358,8 +358,8 @@ stButton-exit{
 .deckglchart {
     #width: 1200px !important;
     #height: 880px !important;
-    width: 90% !important;
-    height: 50%px !important;
+    width: 1510px !important;
+    height: 650px !important;
     position: relative !important;
     left: -400px !important
 }
