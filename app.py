@@ -132,8 +132,8 @@ def main():
                         'mapStyle': 'mapbox://styles/mapbox/dark-v10'
                     },
                     layers=[{
-                        #'type': 'HexagonLayer',
-                        'type': 'ScatterplotLayer',
+                        'type': 'HexagonLayer',
+                        #'type': 'ScatterplotLayer',
                         'data': df_covid_19_cases_loc_latest,
                         'radius': 500,
                         'elevationScale': 4,
