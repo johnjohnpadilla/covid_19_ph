@@ -21,10 +21,6 @@ def icon(icon_name):
 local_css("style.css")
 remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
-#icon("search")
-#selected = st.text_input("", "Search...")
-#button_clicked = st.button("OK")
-
 @st.cache(allow_output_mutation=True)
 def getCovid19Cases():
     URL = "https://coronavirus-ph-api.herokuapp.com/cases"
@@ -82,6 +78,7 @@ def main():
     nearest_case: None
     nearest_case_lat: None;
     nearest_case_lon: None;
+    user_location:None;
     if choice == "Search Location":
         st.write("\n")
         st.write("\n")
@@ -154,7 +151,8 @@ def main():
                         'elevationRange': [0, 1000],
                         'pickable': True,
                         'extruded': True,
-                        'getFillColor': [255, 8, 0]
+                        'getFillColor': [255, 8, 0],
+                        'tooltip ': True
                     },
                         #'getFillColor': (300, 300, 180, 200)
                         #'getFillColor': [50, 100, 50] green
@@ -194,11 +192,12 @@ def main():
     elif choice == "Use Current Location (IP Address)":
         st.write("\n")
         st.write("\n")
-        my_loc = geocoder.ip('me')
-        # st.write(str(my_loc.latlng[0]) + " : " + str(my_loc.latlng[1]))
+
+        my_loc = geocoder.ip('me')[0]
         # current location
         my_loc_lat = my_loc.latlng[0]
         my_loc_long = my_loc.latlng[1]
+
         #st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>CURRENT LOCATION (IP ADDRESS)</b></span><br>",unsafe_allow_html=True)
         # check distance if less than 10km
         # check distance if less than 10km

@@ -205,7 +205,6 @@ body {
 .btn-outline-info .btn-outline-secondary{
     #background-color: black !important;
     border-color: black !important;
-    color: blue;
 }
 .btn-outline-info:active{
     background-color: black !important;
@@ -216,18 +215,17 @@ body {
     background-color: white !important;
     border-color: black !important;
     box-shadow: 0 0 8px rgb(179, 182, 180);
-    color: blue;
 }
 sidebar-close btn btn-outline-secondary {
-    color: blue !important;
+    color: white !important;
 }
 sidebar-close btn btn-outline-secondary {
-    color: blue !important;
+    color: white !important;
 }
 .btn-outline-info:not(:disabled):not(.disabled):focus, .btn-outline-info:not(:disabled):not(.disabled):hover, .btn-outline-primary:not(:disabled):not(.disabled):focus, .btn-outline-primary:not(:disabled):not(.disabled):hover, .btn-outline-secondary:not(:disabled):not(.disabled):focus, .btn-outline-secondary:not(:disabled):not(.disabled):hover {
     background-color: white;
     border-color: black;
-    color: blue;
+    color: white;
     box-shadow: 0 0 20px rgb(179, 182, 180);
 }
 .Widget>label{
@@ -252,37 +250,36 @@ sidebar-close btn btn-outline-secondary {
 }
 
 .stCheckbox .e5{
-    background-color: black !important;
+    background-color: none !important;
 }
 .stCheckbox .e5:active{
-    background-color: black !important;
+    background-color: none !important;
 }
 .stCheckbox .e5:focus{
-    background-color: black !important;
+    background-color: none !important;
 }
 
 .stSelectbox .ay {
     background-color: #001a33;
-    color:white;
+    color: white !important;
     border: 1px solid white;
     opacity: 0.8;
 }
 
 .stSelectbox .ay:hover {
     background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
-    color:white;
-    border: 1px solid white;
+    color:white !important;
+    border: 1px solid white !important;
     opacity: 0.8;
 }
 .ea:hover{
-background-color: blue !important;
+background-color: white !important;
 }
 .bo:hover{
     background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
     opacity: 1.3 !important;
 }
 
-#background checkbox
 .stCheckbox .cf{
     background-color: none !important;
     background: none !important;
@@ -312,13 +309,12 @@ background-color: blue !important;
     background-color: none !important;
     background: none !important;
 }
-#background check box
 
 .stSelectbox .ay:hover {
 
     background-color: #4596E6;
     border: 1px solid white;
-    color:  blue !important;
+    color:  white !important;
     opacity: 0.9;
 }
 stButton-exit{
@@ -327,7 +323,8 @@ stButton-exit{
 .stDataFrame {
     background:#001a33 !important;
     color: white !important;
-    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    #background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    background:#001a33 !important;
     align-items: center !important!;
 }
 .stDataFrame .row-header{
@@ -335,11 +332,13 @@ stButton-exit{
     color: white !important;
 }
 .stDataFrame .col-header{
-    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    background:#001a33 !important;
+    #background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
     color: white !important;
 }
 .stDataFrame .corner{
-    background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
+    background:#001a33 !important;
+    #background: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
 }
 
 .stPlotlyChart .main-svg{
