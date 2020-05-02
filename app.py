@@ -70,8 +70,18 @@ def main():
     df_covid_19_cases_loc_latest = df_covid_19_cases_latest[['latitude', 'longitude']]
     if(df_covid_19_cases_loc_latest['latitude'].isnull().values.any()):
         df_covid_19_cases_loc_latest = df_covid_19_cases[['latitude', 'longitude']]
-    #st.dataframe(df_covid_19_cases_loc_latest)
 
+
+    #clean data for plotting else no plots in map
+    #df_covid_19_cases_loc_latest['latitude'] = df_covid_19_cases_loc_latest['latitude'].astype(float)
+    #df_covid_19_cases_loc_latest['longitude'] = df_covid_19_cases_loc_latest['longitude'].astype(float)
+    df_covid_19_cases_loc_latest['latitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['latitude'], errors='coerce')
+    df_covid_19_cases_loc_latest['longitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['longitude'],errors='coerce')
+    df_covid_19_cases_loc_latest = df_covid_19_cases_loc_latest.dropna()
+
+    nearest_case: None
+    nearest_case_lat: None;
+    nearest_case_lon: None;
     if choice == "Search Location":
         st.write("\n")
         st.write("\n")
@@ -79,8 +89,6 @@ def main():
         user_address = st.text_input("Enter Location Below", "")
         submitButton = st.button("Submit Location")
         showDistance = st.checkbox('Compare Distance')
-        nearest_case_lat: None;
-        nearest_case_lon: None;
 
         if submitButton:
             locator = Nominatim(user_agent="myGeocoder")
@@ -106,8 +114,10 @@ def main():
                             else:
                                 if distance < nearest_case:
                                     nearest_case = distance
-                                    # nearest_case_lat = row.latitude
-                                    # nearest_case_lon = row.longitude
+                                    #nearest_case = pd.DataFrame(np.array([[row.latitude, row.longitude]]))
+                                    #st.write(nearest_case)
+                                    nearest_case_lat = row.latitude
+                                    nearest_case_lon = row.longitude
 
                 #display nearest if less than 10KM
                 if nearest_case != None:
@@ -121,8 +131,13 @@ def main():
 
                 st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
                 st.write("\n")
+                # st.dataframe(df_covid_19_cases_loc_latest)
+                # st.dataframe(df_my_loc)
+                #st.dataframe(nearest_case)
                 st.deck_gl_chart(
                     viewport={
+                         #'latitude': df_covid_19_cases_loc_latest['latitude'].values[0],
+                         #'longitude': df_covid_19_cases_loc_latest['longitude'].values[0],
                         'latitude': user_location.latitude,
                         'longitude': user_location.longitude,
                         # 'latitude': my_loc_lat,
@@ -134,7 +149,7 @@ def main():
                     layers=[{
                         'type': 'HexagonLayer',
                         'data': df_covid_19_cases_loc_latest,
-                        'radius': 400,
+                        'radius': 200,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
                         'pickable': True,
@@ -144,39 +159,29 @@ def main():
                         #'getFillColor': (300, 300, 180, 200)
                         #'getFillColor': [50, 100, 50] green
                         #'getFillColor': [248, 24, 148]
-                #     }, {
-                #     'type': 'ArcLayer',
-                #     'data': df_my_loc,
-                #     'radius': 500,
-                #     'elevationScale': 8,
-                #     'elevationRange': [0, 1000],
-                #     'pickable': True,
-                #     'extruded': True,
-                #     'getFillColor': [100,100,100]
-                 {
-                    'type': 'ScatterplotLayer',
-                    'data': df_my_loc,
-                    'radius': 1000,
-                    'opacity': 1,
-                    'getColor': [75, 205, 250],
-                    'autoHighlight': True,
-                    'elevationScale': 4,
-                    'elevationRange': [0, 1000],
-                    'pickable': True,
-                    'extruded': True,
-                    'getFillColor': [30,144,255]
-                },{
-                    'type': 'ScatterplotLayer',
-                    'data': df_covid_19_cases_loc_latest,
-                    'radius': 400,
-                    'elevationScale': 4,
-                    'elevationRange': [0, 1000],
-                    'pickable': True,
-                    'extruded': True,
-                    'getFillColor': [255, 8, 0]
-                }
-
-                    ])
+                    # {
+                    # 'type': 'ArcLayer',
+                    # 'data': df_my_loc,
+                    # 'radius': 500,
+                    # 'elevationScale': 4,
+                    # 'elevationRange': [0, 1000],
+                    # 'pickable': True,
+                    # 'extruded': True,
+                    # 'getColor': [75, 205, 250],
+                    # },
+                    {
+                        'type': 'ScatterplotLayer',
+                        'data': df_my_loc,
+                        'radius': 1000,
+                        #'opacity': 1,
+                        #'getColor': [75, 205, 250],
+                        #'autoHighlight': True,
+                        'elevationScale': 4,
+                        'elevationRange': [0, 1000],
+                        'pickable': True,
+                        'extruded': True,
+                        'getFillColor': [30,144,255]
+                    }])
                 st.write("\n")
                 st.write("\n")
                 #st.map(df_covid_19_cases_loc_latest)
