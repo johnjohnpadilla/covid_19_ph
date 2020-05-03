@@ -19,8 +19,10 @@ body {
     background: #001a33 !important;
     background-image: none !important:
     border: 1px solid black !important;
+    border-radius 0px !important;
     box-shadow: 0 0 15px rgb(179, 182, 180);
 }
+
 .stDataFrame {
     color: white !important;
     #background:none;
@@ -74,6 +76,7 @@ body {
 }
 .stTextInput>div>div>input:active    {
     color: black;
+    background-color: none !important
     box-shadow: none;
     width: 1500px;
 }
@@ -141,7 +144,22 @@ body {
     box-shadow:none;
     background-color: black !important;
 }
-
+.e5{
+    box-shadow:none;
+    background-color: black !important;
+}
+.stCheckbox .e5{
+    box-shadow:none;
+    background-color: none !important;
+}
+.stCheckbox .e5:active{
+    box-shadow:none;
+    background-color: black !important;
+}
+.stCheckbox .e5:focus{
+    box-shadow:none;
+    background-color: black !important;
+}
 .e6{
     box-shadow:none;
     background-color: black !important;
@@ -246,7 +264,8 @@ sidebar-close btn btn-outline-secondary {
     background:none !important;
 }
 .stCheckbox .ay:focus{
-    background:none !important;
+    #background:none !important;
+    background-image: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
 }
 
 .stCheckbox .e5{

@@ -88,11 +88,15 @@ def main():
         showDistance = st.checkbox('Compare Distance')
 
         if submitButton:
+            #manual click the checkbox as hack
+
             locator = Nominatim(user_agent="myGeocoder")
             user_location = locator.geocode(user_address)
-           # st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>LOCATION:</b></span>",unsafe_allow_html=True)
-            st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span><br>",unsafe_allow_html=True)
+
             if user_location:
+                st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
+                st.markdown("<div style='white-space: normal;'><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span></div><br>", unsafe_allow_html=True)
+
                 # covid-19 map
                 # current location based on IP Address
                 df_my_loc = pd.DataFrame(np.array([[user_location.latitude, user_location.longitude]]))
@@ -121,17 +125,18 @@ def main():
                     #nearest_case_plot = pd.DataFrame(np.array([[nearest_case_lat, nearest_case_lon]]))
                     #st.dataframe(nearest_case_plot)
                     if nearest_case < 10.0:
-                        st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                        st.markdown("<span style='white-space: normal; border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
                     else:
                         st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: green; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
 
-
-                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
+                #st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
+                st.write("\n")
                 st.write("\n")
                 # st.dataframe(df_covid_19_cases_loc_latest)
                 # st.dataframe(df_my_loc)
                 #st.dataframe(nearest_case)
-                st.deck_gl_chart(
+                map_display = st.info("Loading Map...")
+                map_display.deck_gl_chart(
                     viewport={
                          #'latitude': df_covid_19_cases_loc_latest['latitude'].values[0],
                          #'longitude': df_covid_19_cases_loc_latest['longitude'].values[0],
@@ -154,19 +159,6 @@ def main():
                         'getFillColor': [255, 8, 0],
                         'tooltip ': True
                     },
-                        #'getFillColor': (300, 300, 180, 200)
-                        #'getFillColor': [50, 100, 50] green
-                        #'getFillColor': [248, 24, 148]
-                    # {
-                    # 'type': 'ArcLayer',
-                    # 'data': df_my_loc,
-                    # 'radius': 500,
-                    # 'elevationScale': 4,
-                    # 'elevationRange': [0, 1000],
-                    # 'pickable': True,
-                    # 'extruded': True,
-                    # 'getColor': [75, 205, 250],
-                    # },
                     {
                         'type': 'ScatterplotLayer',
                         'data': df_my_loc,
@@ -187,12 +179,13 @@ def main():
 
             # unable to search location
             else:
-                st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
+                st.info("No Location Found!")
+                #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
     elif choice == "Use Current Location (IP Address)":
         st.write("\n")
         st.write("\n")
-
+        st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
         my_loc = geocoder.ip('me')[0]
         # current location
         my_loc_lat = my_loc.latlng[0]
@@ -218,16 +211,15 @@ def main():
         #if nearest_case != None and nearest_case < 10.0:
         if nearest_case != None:
             if nearest_case < 10.0:
-                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: red; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
             else:
-                st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: green; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
+                st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;background-color: green; color: white; border: 1px solid white;'><b>DISTANCE FROM NEAREST CASE: " + str("{:.2f}".format(nearest_case)) + " KM</b></span><br>", unsafe_allow_html=True)
 
         if my_loc_lat and my_loc_long:
             # covid-19 map
             #current location based on IP Address
             df_my_loc = pd.DataFrame(np.array([[my_loc_lat, my_loc_long]]))
             df_my_loc.columns = ['latitude', 'longitude']
-            st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
             st.write("\n")
             st.deck_gl_chart(
                 viewport={
@@ -357,9 +349,9 @@ def main():
                             color_continuous_scale=px.colors.sequential.RdBu, text = Travel_Count)
         st.plotly_chart(travel_fig)
 
-            #plot location using folium
-        locationlist = df_covid_19_cases_loc.values.tolist()
-        #st.write(str(locationlist))
+        # #plot location using folium
+        # locationlist = df_covid_19_cases_loc_latest.values.tolist()
+        # #st.write(str(locationlist))
         # map = folium.Map(location=[14.50, 121], zoom_start=12)
         # for point in range(0, len(locationlist)):
         #     folium.Circle(locationlist[point],
@@ -368,9 +360,10 @@ def main():
         #     fill=True,
         #     fill_color='crimson'
         # ).add_to(map)
-        # #map.save('covid_19_ph.html')
-        # html_string = map._repr_html_()
-        # st.markdown(html_string, unsafe_allow_html=True)
+        # map.save('covid_19_ph.html')
+        # #html_string = map._repr_html_()checkbox
+        #
+        # st.markdown(map._repr_html_(), unsafe_allow_html=True)
         #unable to search location
         # else:
         #     st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: #39B7CD;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
