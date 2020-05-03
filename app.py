@@ -7,6 +7,7 @@ import plotly.express as px
 from geopy.geocoders import Nominatim
 import geocoder
 from geopy.distance import geodesic
+import json
 
 def local_css(file_name):
     with open(file_name) as f:
@@ -23,15 +24,22 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 @st.cache(allow_output_mutation=True)
 def getCovid19Cases():
-    URL = "https://coronavirus-ph-api.herokuapp.com/cases"
-    headers = {'content-type': 'application/json'}
-    response = requests.get(URL, headers=headers)
-    covid_19_json = response.json()
-    #get data values from json
-    covid_19_json_data = covid_19_json['data']
-    #convert json data to dataframe
-    df_covid_19_cases = pd.DataFrame.from_dict(covid_19_json_data, orient='columns')
-    return df_covid_19_cases
+    # URL = "https://coronavirus-ph-api.herokuapp.com/cases"
+    # headers = {'content-type': 'application/json'}
+    # response = requests.get(URL, headers=headers)
+    # covid_19_json = response.json()
+    # #get data values from json
+    # covid_19_json_data = covid_19_json['data']
+    # #convert json data to dataframe
+    # df_covid_19_cases = pd.DataFrame.from_dict(covid_19_json_data, orient='columns')
+    # return df_covid_19_cases
+    with open('covid_19_ph.json') as json_file:
+        covid_19_json = json.load(json_file)
+        #get data values from json
+        covid_19_json_data = covid_19_json['data']
+        #convert json data to dataframe
+        df_covid_19_cases = pd.DataFrame.from_dict(covid_19_json_data, orient='columns')
+        return df_covid_19_cases
 
 @st.cache(allow_output_mutation=True)
 def getCovid19CasesLatest():
