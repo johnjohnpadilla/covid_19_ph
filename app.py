@@ -103,7 +103,7 @@ def main():
 
             if user_location:
                 st.markdown("<span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: none; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
-                st.markdown("<div style='white-space: normal;'><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span></div><br>", unsafe_allow_html=True)
+                st.markdown("<div style='white-space: normal;'><span style='display: inline-block; word-wrap: break-word; border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(user_location) + "</b></span></div><br>", unsafe_allow_html=True)
 
                 # covid-19 map
                 # current location based on IP Address
@@ -143,7 +143,7 @@ def main():
                 # st.dataframe(df_covid_19_cases_loc_latest)
                 # st.dataframe(df_my_loc)
                 #st.dataframe(nearest_case)
-                map_display = st.info("Loading Map...")
+                map_display = st.info("Loading...")
                 map_display.deck_gl_chart(
                     viewport={
                          #'latitude': df_covid_19_cases_loc_latest['latitude'].values[0],
