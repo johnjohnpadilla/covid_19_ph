@@ -274,14 +274,14 @@ def main():
         # st_ms = st.multiselect("Columns", df_covid_19_cases_latest.columns.tolist(), default=cols)
         # st.dataframe(st_ms)
         st.dataframe(df_covid_19_cases_latest)
-        st.write("\n")
-        st.write("\n")
-        st.dataframe(df_covid_19_cases)
-        st.write("\n")
-        st.write("\n")
+        # st.write("\n")
+        # st.write("\n")
+        # st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white'><b>OUTDATED LIST</b></span><br><br>",unsafe_allow_html=True)
+        # st.dataframe(df_covid_19_cases)
         df_date_reported = df_covid_19_cases_latest.groupby('date_reported').count()
         df_date_reported = df_date_reported["case_code"].reset_index()
         df_date_reported.columns = ["Date", "Total"]
+        st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white'><b>CASES PER DAY</b></span><br><br>",unsafe_allow_html=True)
         st.dataframe(df_date_reported)
     elif choice == "Charts":
         st.write("\n")
@@ -301,10 +301,15 @@ def main():
         Location = pd.Series(k_location.index[:])
         Count = list(k_location['date_reported'][:])
         Location_Count = pd.DataFrame(list(zip(Location, Count)), columns=['Location', 'Count'])
-        location_fig = px.bar(Location_Count, x='Location', y='Count', color='Count',
+        daily_cases_fig = px.bar(Location_Count, x='Location', y='Count', color='Count',
                               labels={'Location': '', 'Count': ''},
                               color_continuous_scale='Bluered_r', text = Count)
-        st.plotly_chart(location_fig)
+        daily_cases_fig.update_layout({
+            'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+            'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+            'font': dict(family="Roboto", size=14, color='white')
+        })
+        st.plotly_chart(daily_cases_fig)
 
         st.write("\n")
         st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white;'><b>HEALTH STATUS (Outdated)</b></span>",unsafe_allow_html=True)
@@ -318,6 +323,12 @@ def main():
         health_count = pd.DataFrame(list(zip(health_status, health_status_count)), columns=['Health Status', 'Count'])
         health_fig = px.bar(health_count, x='Health Status', y='Count', color='Count',
                             labels={'Health Status': '', 'Count': ''}, text = health_status_count)
+        health_fig.update_layout({
+            'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+            'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+            #'font': dict(family="Courier New, monospace",size=16,color="#7f7f7f")
+            'font': dict(family="Roboto", size=14, color='white')
+        })
         st.plotly_chart(health_fig)
 
         # Bar chart to show the Top 15 By Location using plotly
@@ -335,6 +346,11 @@ def main():
         location_fig = px.bar(Location_Count, x='Location', y='Count', color='Count',
                               labels={'Location': '', 'Count': ''},
                               color_continuous_scale='Bluered_r', text = Count)
+        location_fig.update_layout({
+            'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+            'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+            'font': dict(family="Roboto", size=14, color='white')
+        })
         st.plotly_chart(location_fig)
 
         # Bar chart to show the Top 15 By Travel History using plotly
@@ -355,6 +371,11 @@ def main():
         travel_fig = px.bar(Travel_History_Count, x='Travel_History', y='Count', color='Count',
                             labels={'Travel_History': '', 'Count': ''},
                             color_continuous_scale=px.colors.sequential.RdBu, text = Travel_Count)
+        travel_fig.update_layout({
+            'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+            'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+            'font': dict(family="Roboto", size=14, color='white')
+        })
         st.plotly_chart(travel_fig)
 
         # #plot location using folium

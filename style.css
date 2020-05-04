@@ -375,4 +375,6 @@ stButton-exit{
     background-color: linear-gradient(to right, rgb(1, 3, 5),#001a33, rgb(1, 3, 5)) !important;
 }
 
-
+.main-svg{
+    background: blue !important!;
+}
