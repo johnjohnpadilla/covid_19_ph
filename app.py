@@ -216,7 +216,7 @@ def main():
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
-                                   execution_path=CHROMEDRIVER_PATH,
+                                   executable_path=CHROMEDRIVER_PATH,
                                    desired_capabilities=capabilities)
         browser.get(os.path.join(os.getcwd(), "test.html"))
         browser.execute_script("getLocation()")
