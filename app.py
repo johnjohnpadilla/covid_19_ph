@@ -195,8 +195,13 @@ def main():
                 #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
     elif choice == "Current Location (Allow Access To Location)":
+        #heroku configs
+        GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+        CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+
 
         chrome_options = Options()
+        chrome_options.binary_location = GOOGLE_CHROME_PATH
         #chrome_options.add_argument('headless')
         chrome_options.add_argument('window-size=1920x1080')
         chrome_options.add_argument("disable-gpu")
@@ -206,10 +211,13 @@ def main():
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
-
+        os.chmod('/path/to/chromedriver', '0755')
         chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
-                                   executable_path=chrome_driver,
+                                   #local
+                                   #executable_path=chrome_driver,
+                                   #heroku
+                                   execution_path=CHROMEDRIVER_PATH,
                                    desired_capabilities=capabilities)
         browser.get(os.path.join(os.getcwd(), "test.html"))
         browser.execute_script("getLocation()")
