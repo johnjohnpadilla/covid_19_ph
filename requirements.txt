@@ -7,5 +7,5 @@ plotly==4.6.0
 geocoder==1.38.1
 geopy==1.21.0
 vega-datasets==0.8.0
-
+selenium==3.141.0
 
