@@ -8,7 +8,11 @@ from geopy.geocoders import Nominatim
 import geocoder
 from geopy.distance import geodesic
 import json
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import DesiredCapabilities
 
+import os
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -57,7 +61,7 @@ def main():
     #title
     st.markdown("<h3 style='box-shadow: 0 0 25px rgb(179, 182, 180);border-radius: 10px; border: 1px solid black;height:100%;padding: 20px 20px 20px 20px; text-align: center; background-color:#001a33; color:white;'>COVID-19 CASES IN THE PHILIPPINES</h3>", unsafe_allow_html=True)
     #st.markdown("<br><span style='border-radius: 5px; line-height: 80px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>COVID-19 CASES IN THE PHILIPPINES</b></span><br>",unsafe_allow_html=True)
-    activities = ["Search Location", "Use Current Location (IP Address)", "List of Covid-19 Cases", "Charts"]
+    activities = ["Search Location", "Current Location (Allow Access To Location)", "List of Covid-19 Cases", "Charts"]
     choice = st.sidebar.selectbox("", activities)
 
     # get covid cases
@@ -190,14 +194,57 @@ def main():
                 st.info("No Location Found!")
                 #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
-    elif choice == "Use Current Location (IP Address)":
+    elif choice == "Current Location (Allow Access To Location)":
+
+        chrome_options = Options()
+        #chrome_options.add_argument('headless')
+        chrome_options.add_argument('window-size=1920x1080')
+        chrome_options.add_argument("disable-gpu")
+        chrome_options.add_argument("--no-sandbox")
+        #workaround for issue with headless
+        chrome_options.add_argument("--window-position=-200000,-200000")
+        capabilities = DesiredCapabilities.CHROME.copy()
+        capabilities['acceptSslCerts'] = True
+        capabilities['acceptInsecureCerts'] = True
+
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        browser = webdriver.Chrome(options=chrome_options,
+                                   executable_path=chrome_driver,
+                                   desired_capabilities=capabilities)
+        browser.get(os.path.join(os.getcwd(), "test.html"))
+        browser.execute_script("getLocation()")
+        web_element: None
+        counter = 0
+        while counter < 50:
+            try:
+                web_element = browser.find_element_by_id('demo').text
+                counter += 1
+                if web_element:
+                    break
+            except:
+                break
+
+        browser.close();
+        my_loc_lat: None
+        my_loc_long: None
+        if web_element:
+            coordinates = web_element.split(":")
+            my_loc_lat = float(coordinates[0])
+            my_loc_long = float(coordinates[1])
+        else:
+            my_loc = geocoder.ip('me')[0]
+            # current location
+            my_loc_lat = my_loc.latlng[0]
+            my_loc_long = my_loc.latlng[1]
+
         st.write("\n")
         st.write("\n")
         st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
-        my_loc = geocoder.ip('me')[0]
-        # current location
-        my_loc_lat = my_loc.latlng[0]
-        my_loc_long = my_loc.latlng[1]
+        # my_loc = geocoder.ip('me')[0]
+        # # current location
+        # my_loc_lat = my_loc.latlng[0]
+        # my_loc_long = my_loc.latlng[1]
+        # st.write(str(my_loc_lat) + " : " + str(my_loc_long))
 
         #st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>CURRENT LOCATION (IP ADDRESS)</b></span><br>",unsafe_allow_html=True)
         # check distance if less than 10km
