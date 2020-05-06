@@ -210,7 +210,7 @@ def main():
         chrome_options.add_argument("--window-position=-200000,-200000")
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
-        capabilities['acceptInsecureCerts'] = True
+        #capabilities['acceptInsecureCerts'] = True
         chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
