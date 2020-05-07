@@ -211,14 +211,15 @@ def main():
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
                                    executable_path=CHROMEDRIVER_PATH,
                                    desired_capabilities=capabilities)
-        browser.get(os.path.join(os.getcwd(), "test.html"))
+        #browser.get(os.path.join(os.getcwd(), "test.html"))
+        browser.get("test.html")
         browser.execute_script("getLocation()")
         web_element: None
         counter = 0
