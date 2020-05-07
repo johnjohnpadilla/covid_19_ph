@@ -206,20 +206,25 @@ def main():
         #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920x1080')
         chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--proxy-bypass-list=*")
+        chrome_options.add_argument("--proxy-server='direct://'")
+        chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("disable-gpu")
         chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument("--disable-extensions")
         #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
-        # capabilities = DesiredCapabilities.CHROME.copy()
-        # capabilities['acceptSslCerts'] = True
-        # capabilities['acceptInsecureCerts'] = True
+        capabilities = DesiredCapabilities.CHROME.copy()
+        capabilities['acceptSslCerts'] = True
+        capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(chrome_options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
-                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"))
-                                   # desired_capabilities=capabilities)
+                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   desired_capabilities=capabilities)
         #browser.get(os.path.join(os.getcwd(), "test.html"))
         html_file = os.getcwd() + "//" + "test.html"
         browser.get("file:///" + html_file)
