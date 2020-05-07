@@ -221,8 +221,9 @@ def main():
                                    executable_path=os.environ.get("CHROMEDRIVER_PATH"))
                                    # desired_capabilities=capabilities)
         #browser.get(os.path.join(os.getcwd(), "test.html"))
+        html_file = os.getcwd() + "//" + "test.html"
+        browser.get("file:///" + html_file)
         #browser.get("test.html")
-        browser.get("https://www.google.com/")
         browser.execute_script("getLocation()")
         web_element: None
         counter = 0
