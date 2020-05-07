@@ -219,7 +219,7 @@ def main():
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(options=chrome_options,
+        browser = webdriver.Chrome(chrome_options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
