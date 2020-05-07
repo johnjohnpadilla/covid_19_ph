@@ -197,27 +197,29 @@ def main():
     elif choice == "Current Location (Allow Access To Location)":
         #heroku configs
         GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
-        CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+        #CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 
         chrome_options = Options()
-        chrome_options.binary_location = GOOGLE_CHROME_PATH
+        #chrome_options.binary_location = GOOGLE_CHROME_PATH
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920x1080')
+        chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         #workaround for issue with headless
         #chrome_options.add_argument("--window-position=-200000,-200000")
-        capabilities = DesiredCapabilities.CHROME.copy()
-        capabilities['acceptSslCerts'] = True
-        capabilities['acceptInsecureCerts'] = True
+        # capabilities = DesiredCapabilities.CHROME.copy()
+        # capabilities['acceptSslCerts'] = True
+        # capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(options=chrome_options,
+        browser = webdriver.Chrome(chrome_options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
-                                   executable_path=CHROMEDRIVER_PATH,
-                                   desired_capabilities=capabilities)
+                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+                                   # desired_capabilities=capabilities)
         #browser.get(os.path.join(os.getcwd(), "test.html"))
         browser.get("test.html")
         browser.execute_script("getLocation()")
