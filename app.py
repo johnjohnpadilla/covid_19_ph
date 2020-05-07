@@ -200,7 +200,7 @@ def main():
         #CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 
-        chrome_options = Options()
+        chrome_options = webdriver.ChromeOptions()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument('--headless')
@@ -219,7 +219,7 @@ def main():
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(chrome_options=chrome_options,
+        browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #heroku
