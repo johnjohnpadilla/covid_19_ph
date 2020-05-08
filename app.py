@@ -11,6 +11,8 @@ import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.support.ui import WebDriverWait
+import time
 
 import os
 def local_css(file_name):
@@ -200,43 +202,76 @@ def main():
         #CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--window-size=1920x1080')
+        chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--proxy-bypass-list=*")
-        chrome_options.add_argument("--proxy-server='direct://'")
-        chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("disable-gpu")
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument("--disable-web-security");
+        chrome_options.add_argument("--allow-file-access-from-files");
+        chrome_options.add_argument("--allow-running-insecure-content");
+        chrome_options.add_argument("--allow-cross-origin-auth-prompt");
+        chrome_options.add_argument("--allow-file-access");
         chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--test-type");
+        chrome_options.add_argument("--use--fake-ui-for-media-stream")
+        chrome_options.add_argument("---use-fake-device-for-media-stream")
+        chrome_options.add_argument('--ignore-certificate-errors')
         #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
-        #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(chrome_options=chrome_options,
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        browser = webdriver.Chrome(options=chrome_options,
                                    #local
-                                   #executable_path=chrome_driver,
+                                   executable_path=chrome_driver,
                                    #heroku
-                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"))
                                    desired_capabilities=capabilities)
+
+        # //*[@id="latitude"]
+        # // *[ @ id = "longitude"]
+        #browser.set_window_size(1920, 1080)
         #browser.get(os.path.join(os.getcwd(), "test.html"))
-        html_file = os.getcwd() + "//" + "test.html"
-        browser.get("file:///" + html_file)
+        # html_file = os.getcwd() + "/" + "test.html"
+        # html_file = html_file.replace('\\', '/')
+        # browser.get("file:///" + html_file)
+        #st.write("file:///" + html_file)
+        browser.get('https://mycurrentlocation.net/')
+        #browser.get('https://the-internet.herokuapp.com/geolocation')
+        #time.sleep(10)
+        #st.write(browser.page_source.encode("utf-8"))
+        # WebDriverWait(browser, 10).until(
+        #     lambda s: s.find_element_by_id('demo').is_displayed()
+        # )
+
+
         #browser.get("test.html")
-        browser.execute_script("getLocation()")
+        #browser.execute_script("getLocation()")
         web_element: None
+        latitude: None
+        longitude: None
         counter = 0
-        while counter < 50:
+        while counter < 100:
             try:
-                web_element = browser.find_element_by_id('demo').text
+                #//*[@id="lat-value"]
+                longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
+                longitude = [x.text for x in longitude]
+                longitude = str(longitude[0])
+
+                latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
+                latitude = [x.text for x in latitude]
+                latitude = str(latitude[0])
+
+                #st.write(latitude + ":" + longitude)
+                #web_element = browser.find_element_by_id('demo').text
                 counter += 1
-                if web_element:
+                #st.write('Checking Coordinates...')
+                if longitude and latitude:
                     break
             except:
                 break
@@ -244,13 +279,15 @@ def main():
         browser.close();
         my_loc_lat: None
         my_loc_long: None
-        if web_element:
-            coordinates = web_element.split(":")
-            my_loc_lat = float(coordinates[0])
-            my_loc_long = float(coordinates[1])
+        if longitude and latitude:
+            # coordinates = web_element.split(":")
+            # my_loc_lat = float(coordinates[0])
+            # my_loc_long = float(coordinates[1])
+            my_loc_long = float(longitude)
+            my_loc_lat = float(latitude)
         else:
             my_loc = geocoder.ip('me')[0]
-            # current location
+                # current location
             my_loc_lat = my_loc.latlng[0]
             my_loc_long = my_loc.latlng[1]
 
