@@ -199,11 +199,11 @@ def main():
     elif choice == "Current Location (Allow Access To Location)":
         #heroku configs
         GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
-        #CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+        CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 
         chrome_options =  Options()
-        #chrome_options.binary_location = GOOGLE_CHROME_PATH
+        chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920,1480')
@@ -228,9 +228,9 @@ def main():
         chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
-                                   executable_path=chrome_driver,
+                                   #executable_path=chrome_driver,
                                    #heroku
-                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"))
+                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
