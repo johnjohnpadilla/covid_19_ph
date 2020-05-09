@@ -206,7 +206,7 @@ def main():
         chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        #chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("disable-gpu")
