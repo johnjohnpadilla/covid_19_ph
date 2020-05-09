@@ -13,7 +13,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-from flask import Flask, jsonify, request
 
 import os
 def local_css(file_name):
