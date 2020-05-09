@@ -231,8 +231,8 @@ def main():
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
-        #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        chrome_driver = os.path.join('/home/ec2-user/covid_19_ph/', "chromedriver.exe")
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        #chrome_driver = os.path.join('/home/ec2-user/covid_19_ph/', "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    executable_path=chrome_driver,
