@@ -197,49 +197,49 @@ def main():
                 #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
     elif choice == "Current Location (Allow Access To Location)":
-        #heroku configs
-        GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
-        CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-        CHROMEDRIVER_BIN = '/usr/bin/google-chrome'
-
-        chrome_options =  Options()
-        #chrome_options.binary_location = GOOGLE_CHROME_PATH
-        #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.binary_location = CHROMEDRIVER_BIN
-        #chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--window-size=1920,1480')
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("disable-gpu")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-web-security");
-        chrome_options.add_argument("--allow-file-access-from-files");
-        chrome_options.add_argument("--allow-running-insecure-content");
-        chrome_options.add_argument("--allow-cross-origin-auth-prompt");
-        chrome_options.add_argument("--allow-file-access");
-        chrome_options.add_argument("--disable-extensions")
-        #chrome_options.add_argument("--test-type");
-        chrome_options.add_argument("--use--fake-ui-for-media-stream")
-        chrome_options.add_argument("---use-fake-device-for-media-stream")
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--remote-debugging-port=9222')
-        chrome_options.add_argument("--allow-insecure-localhost");
-        chrome_options.add_argument("--disable-user-media-security")
-        chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
-        chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
-        #workaround for issue with headless
-        chrome_options.add_argument("--window-position=-200000,-200000")
-        chrome_options.set_capability('acceptInsecureCerts', True)
-        capabilities = DesiredCapabilities.CHROME.copy()
-        capabilities['acceptSslCerts'] = True
-        capabilities['acceptInsecureCerts'] = True
-        #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        chrome_driver = '/usr/bin/chromedriver'
-        browser = webdriver.Chrome(options=chrome_options,
-                                   #local
-                                   executable_path=chrome_driver,
-                                   #heroku
-                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                   desired_capabilities=capabilities)
+        # #heroku configs
+        # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
+        # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+        # CHROMEDRIVER_BIN = '/usr/bin/google-chrome'
+        #
+        # chrome_options =  Options()
+        # #chrome_options.binary_location = GOOGLE_CHROME_PATH
+        # #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # chrome_options.binary_location = CHROMEDRIVER_BIN
+        # #chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--window-size=1920,1480')
+        # chrome_options.add_argument("--disable-dev-shm-usage")
+        # chrome_options.add_argument("disable-gpu")
+        # chrome_options.add_argument("--no-sandbox")
+        # chrome_options.add_argument("--disable-web-security");
+        # chrome_options.add_argument("--allow-file-access-from-files");
+        # chrome_options.add_argument("--allow-running-insecure-content");
+        # chrome_options.add_argument("--allow-cross-origin-auth-prompt");
+        # chrome_options.add_argument("--allow-file-access");
+        # chrome_options.add_argument("--disable-extensions")
+        # #chrome_options.add_argument("--test-type");
+        # chrome_options.add_argument("--use--fake-ui-for-media-stream")
+        # chrome_options.add_argument("---use-fake-device-for-media-stream")
+        # chrome_options.add_argument('--ignore-certificate-errors')
+        # chrome_options.add_argument('--remote-debugging-port=9222')
+        # chrome_options.add_argument("--allow-insecure-localhost");
+        # chrome_options.add_argument("--disable-user-media-security")
+        # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
+        # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
+        # #workaround for issue with headless
+        # chrome_options.add_argument("--window-position=-200000,-200000")
+        # chrome_options.set_capability('acceptInsecureCerts', True)
+        # capabilities = DesiredCapabilities.CHROME.copy()
+        # capabilities['acceptSslCerts'] = True
+        # capabilities['acceptInsecureCerts'] = True
+        # #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        # chrome_driver = '/usr/bin/chromedriver'
+        # browser = webdriver.Chrome(options=chrome_options,
+        #                            #local
+        #                            executable_path=chrome_driver,
+        #                            #heroku
+        #                            #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+        #                            desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
         # // *[ @ id = "longitude"]
@@ -249,7 +249,7 @@ def main():
         # html_file = html_file.replace('\\', '/')
         # browser.get("file:///" + html_file)
         #st.write("file:///" + html_file)
-        browser.get('https://mycurrentlocation.net/')
+        # browser.get('https://mycurrentlocation.net/')
         #browser.get('https://the-internet.herokuapp.com/geolocation')
 
         #browser.switch_to_alert().accept()
@@ -269,13 +269,13 @@ def main():
         while counter < 100:
             try:
                 #//*[@id="lat-value"]
-                longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
-                longitude = [x.text for x in longitude]
-                longitude = str(longitude[0])
-
-                latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
-                latitude = [x.text for x in latitude]
-                latitude = str(latitude[0])
+                # longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
+                # longitude = [x.text for x in longitude]
+                # longitude = str(longitude[0])
+                #
+                # latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
+                # latitude = [x.text for x in latitude]
+                # latitude = str(latitude[0])
 
                 #st.write(latitude + ":" + longitude)
                 #web_element = browser.find_element_by_id('demo').text
@@ -286,34 +286,34 @@ def main():
             except:
                 break
 
-        browser.close();
-        my_loc_lat: None
-        my_loc_long: None
-        if longitude and latitude:
-            # coordinates = web_element.split(":")
-            # my_loc_lat = float(coordinates[0])
-            # my_loc_long = float(coordinates[1])
-            my_loc_long = float(longitude)
-            my_loc_lat = float(latitude)
-        else:
-            URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
-            headers = {'content-type': 'application/json'}
-            response = requests.get(URL, headers=headers)
-            ipAddr = response.headers.get("X-Forwarded-For")
-            if (ipAddr):
-                list = ipAddr.split(",");
-                ipAddr = list[list.length-1]
+        # # browser.close();
+        # my_loc_lat: None
+        # my_loc_long: None
+        # if longitude and latitude:
+        #     # coordinates = web_element.split(":")
+        #     # my_loc_lat = float(coordinates[0])
+        #     # my_loc_long = float(coordinates[1])
+        #     my_loc_long = float(longitude)
+        #     my_loc_lat = float(latitude)
+        # else:
+            # URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
+            # headers = {'content-type': 'application/json'}
+            # response = requests.get(URL, headers=headers)
+            # ipAddr = response.headers.get("X-Forwarded-For")
+            # if (ipAddr):
+            #     list = ipAddr.split(",");
+            #     ipAddr = list[list.length-1]
 
                 # current location
-            my_loc: None
+            # my_loc: None
 
-            if ipAddr:
-                my_loc = geocoder.ip(ipAddr)
-            else:
-                my_loc = geocoder.ip('me')[0]
+            # if ipAddr:
+            #     my_loc = geocoder.ip(ipAddr)
+            # else:
+        my_loc = geocoder.ip('me')[0]
 
-            my_loc_lat = my_loc.latlng[0]
-            my_loc_long = my_loc.latlng[1]
+        my_loc_lat = my_loc.latlng[0]
+        my_loc_long = my_loc.latlng[1]
 
         st.write("\n")
         st.write("\n")
