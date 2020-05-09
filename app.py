@@ -200,11 +200,12 @@ def main():
         #heroku configs
         GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
         CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-
+        CHROMEDRIVER_BIN = '/usr/bin/google-chrome'
 
         chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.binary_location = CHROMEDRIVER_BIN
         #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
