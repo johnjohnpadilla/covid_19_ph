@@ -233,13 +233,13 @@ def main():
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(options=chrome_options,
+        #chrome_driver = os.path.join('/usr/bin/google-chrome/', "chromedriver.exe")
+        browser = webdriver.Chrome(options=chrome_options)
                                    #local
-                                   executable_path=chrome_driver,
+                                   #executable_path=chrome_driver,
                                    #heroku
                                    #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                   desired_capabilities=capabilities)
+                                   #desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
         # // *[ @ id = "longitude"]
