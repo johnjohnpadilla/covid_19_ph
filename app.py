@@ -216,7 +216,7 @@ def main():
         chrome_options.add_argument("--allow-cross-origin-auth-prompt");
         chrome_options.add_argument("--allow-file-access");
         chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--test-type");
+        #chrome_options.add_argument("--test-type");
         chrome_options.add_argument("--use--fake-ui-for-media-stream")
         chrome_options.add_argument("---use-fake-device-for-media-stream")
         chrome_options.add_argument('--ignore-certificate-errors')
