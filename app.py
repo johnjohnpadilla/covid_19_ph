@@ -200,8 +200,8 @@ def main():
         #heroku configs
         # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
         # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-        GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
-        CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
+        # GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
+        # CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
 
         chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
@@ -232,13 +232,14 @@ def main():
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(GOOGLE_CHROME_PATH, "chromedriver.exe")
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
-                                   executable_path=CHROMEDRIVER_PATH,
+                                   #aws
+                                   #executable_path=CHROMEDRIVER_PATH,
                                    #heroku
-                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
