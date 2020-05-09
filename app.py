@@ -206,7 +206,7 @@ def main():
         chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument('--headless')
+        #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("disable-gpu")
@@ -250,6 +250,7 @@ def main():
         # browser.get("file:///" + html_file)
         #st.write("file:///" + html_file)
         browser.get('https://mycurrentlocation.net/')
+
         #browser.get('https://the-internet.herokuapp.com/geolocation')
 
         #browser.switch_to_alert().accept()
@@ -287,6 +288,7 @@ def main():
                 break
 
         browser.close();
+        browser.quit();
         my_loc_lat: None
         my_loc_long: None
         if longitude and latitude:
