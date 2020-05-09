@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-import request as req
 import streamlit as st
 import plotly.express as px
 from geopy.geocoders import Nominatim
