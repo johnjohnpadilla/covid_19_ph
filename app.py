@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time
+from flask import Flask, jsonify, request
 
 import os
 def local_css(file_name):
@@ -203,9 +204,9 @@ def main():
 
 
         chrome_options =  Options()
-        chrome_options.binary_location = GOOGLE_CHROME_PATH
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument('--headless')
+        #chrome_options.binary_location = GOOGLE_CHROME_PATH
+        #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        #chrome_options.add_argument('--headless')
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("disable-gpu")
@@ -226,17 +227,17 @@ def main():
         chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
         chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
         #workaround for issue with headless
-        #chrome_options.add_argument("--window-position=-200000,-200000")
+        chrome_options.add_argument("--window-position=-200000,-200000")
         chrome_options.set_capability('acceptInsecureCerts', True)
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver_old.exe")
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
-                                   #executable_path=chrome_driver,
+                                   executable_path=chrome_driver,
                                    #heroku
-                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
