@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
+import request as req
 import streamlit as st
 import plotly.express as px
 from geopy.geocoders import Nominatim
@@ -220,17 +221,23 @@ def main():
         chrome_options.add_argument("--use--fake-ui-for-media-stream")
         chrome_options.add_argument("---use-fake-device-for-media-stream")
         chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument('--remote-debugging-port=9222')
+        chrome_options.add_argument("--allow-insecure-localhost");
+        chrome_options.add_argument("--disable-user-media-security")
+        chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
+        chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
         #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
+        chrome_options.set_capability('acceptInsecureCerts', True)
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
-        capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        #capabilities['acceptInsecureCerts'] = True
+        chrome_driver = os.path.join(os.getcwd(), "chromedriver_old.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
-                                   #executable_path=chrome_driver,
+                                   executable_path=chrome_driver,
                                    #heroku
-                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
@@ -243,8 +250,10 @@ def main():
         #st.write("file:///" + html_file)
         browser.get('https://mycurrentlocation.net/')
         #browser.get('https://the-internet.herokuapp.com/geolocation')
-        #time.sleep(10)
-        #st.write(browser.page_source.encode("utf-8"))
+
+        #browser.switch_to_alert().accept()
+        # time.sleep(5)
+        # st.write(browser.page_source.encode("utf-8"))
         # WebDriverWait(browser, 10).until(
         #     lambda s: s.find_element_by_id('demo').is_displayed()
         # )
@@ -286,8 +295,22 @@ def main():
             my_loc_long = float(longitude)
             my_loc_lat = float(latitude)
         else:
-            my_loc = geocoder.ip('me')[0]
+            URL = "https://coronavirus-ph-api.herokuapp.com/doh-data-drop"
+            headers = {'content-type': 'application/json'}
+            response = requests.get(URL, headers=headers)
+            ipAddr = response.headers.get("X-Forwarded-For")
+            if (ipAddr):
+                list = ipAddr.split(",");
+                ipAddr = list[list.length-1]
+
                 # current location
+            my_loc: None
+
+            if ipAddr:
+                my_loc = geocoder.ip(ipAddr)
+            else:
+                my_loc = geocoder.ip('me')[0]
+
             my_loc_lat = my_loc.latlng[0]
             my_loc_long = my_loc.latlng[1]
 
