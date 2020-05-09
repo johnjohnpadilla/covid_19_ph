@@ -235,7 +235,8 @@ def main():
         chrome_driver = os.path.join(GOOGLE_CHROME_PATH, "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
-                                   executable_path=chrome_driver,
+                                   #executable_path=chrome_driver,
+                                   executable_path=CHROMEDRIVER_PATH,
                                    #heroku
                                    #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
