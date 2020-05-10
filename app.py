@@ -323,6 +323,7 @@ def main():
         my_loc_lat: None
         my_loc_long: None
         geocode_result = getLocation()
+        st.write(geocode_result)
         if geocode_result:
             # coordinates = web_element.split(":")
             # my_loc_lat = float(coordinates[0])
