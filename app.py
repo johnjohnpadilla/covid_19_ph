@@ -234,20 +234,20 @@ def main():
         # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
         # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
         # #workaround for issue with headless
-        chrome_options.add_argument("--window-position=-200000,-200000")
-        chrome_options.set_capability('acceptInsecureCerts', True)
-        capabilities = DesiredCapabilities.CHROME.copy()
-        capabilities['acceptSslCerts'] = True
+        # chrome_options.add_argument("--window-position=-200000,-200000")
+        # chrome_options.set_capability('acceptInsecureCerts', True)
+        # capabilities = DesiredCapabilities.CHROME.copy()
+        # capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #aws
-                                   executable_path=CHROMEDRIVER_PATH,
+                                   executable_path=CHROMEDRIVER_PATH)
                                    #heroku
                                    #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                   desired_capabilities=capabilities)
+                                   #desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
         # // *[ @ id = "longitude"]
