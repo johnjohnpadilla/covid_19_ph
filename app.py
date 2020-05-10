@@ -163,6 +163,7 @@ def main():
                 # st.dataframe(df_my_loc)
                 #st.dataframe(nearest_case)
                 map_display = st.info("Loading...")
+                map_display2 = st.info("Loading...")
                 map_display.deck_gl_chart(
                     viewport={
                          #'latitude': df_covid_19_cases_loc_latest['latitude'].values[0],
@@ -173,12 +174,13 @@ def main():
                         # 'longitude': my_loc_long,
                         'zoom': 11,
                         'pitch': 40,
-                        'mapStyle': 'mapbox://styles/mapbox/dark-v10'
+                        #'mapStyle': 'mapbox://styles/mapbox/dark-v10'
+                        'mapStyle': 'mapbox://styles/mapbox/satellite-v9'
                     },
                     layers=[{
-                        'type': 'HexagonLayer',
+                        'type': 'ScatterplotLayer',
                         'data': df_covid_19_cases_loc_latest,
-                        'radius': 200,
+                        'radius': 3000,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
                         'pickable': True,
@@ -199,8 +201,44 @@ def main():
                         'extruded': True,
                         'getFillColor': [30,144,255]
                     }])
-                st.write("\n")
-                st.write("\n")
+                st.text("")
+                map_display2.deck_gl_chart(
+                    viewport={
+                        # 'latitude': df_covid_19_cases_loc_latest['latitude'].values[0],
+                        # 'longitude': df_covid_19_cases_loc_latest['longitude'].values[0],
+                        'latitude': user_location.latitude,
+                        'longitude': user_location.longitude,
+                        # 'latitude': my_loc_lat,
+                        # 'longitude': my_loc_long,
+                        'zoom': 11,
+                        'pitch': 40,
+                        'mapStyle': 'mapbox://styles/mapbox/dark-v10'
+                        #'mapStyle': 'mapbox://styles/mapbox/satellite-v9'
+                    },
+                    layers=[{
+                        'type': 'HexagonLayer',
+                        'data': df_covid_19_cases_loc_latest,
+                        'radius': 200,
+                        'elevationScale': 4,
+                        'elevationRange': [0, 1000],
+                        'pickable': True,
+                        'extruded': True,
+                        'getFillColor': [255, 8, 0],
+                        'tooltip ': True
+                    },
+                        {
+                            'type': 'ScatterplotLayer',
+                            'data': df_my_loc,
+                            'radius': 1000,
+                            # 'opacity': 1,
+                            # 'getColor': [75, 205, 250],
+                            # 'autoHighlight': True,
+                            'elevationScale': 4,
+                            'elevationRange': [0, 1000],
+                            'pickable': True,
+                            'extruded': True,
+                            'getFillColor': [30, 144, 255]
+                        }])
                 #st.map(df_covid_19_cases_loc_latest)
 
 
@@ -374,7 +412,42 @@ def main():
             df_my_loc = pd.DataFrame(np.array([[my_loc_lat, my_loc_long]]))
             df_my_loc.columns = ['latitude', 'longitude']
             st.write("\n")
-            st.deck_gl_chart(
+            map_display = st.info("Loading...")
+            map_display2 = st.info("Loading...")
+            map_display.deck_gl_chart(
+                viewport={
+                    # 'latitude': user_location.latitude,
+                    # 'longitude': user_location.longitude,
+                    'latitude': my_loc_lat,
+                    'longitude': my_loc_long,
+                    'zoom': 12,
+                    'pitch': 40,
+                    'mapStyle': 'mapbox://styles/mapbox/satellite-v9'
+
+                },
+                layers=[{
+                    'type': 'ScatterplotLayer',
+                    'data': df_covid_19_cases_loc_latest,
+                    'radius': 200,
+                    'elevationScale': 4,
+                    'elevationRange': [0, 1000],
+                    'pickable': True,
+                    'extruded': True,
+                    'getFillColor': [255, 8, 0]
+                }, {
+                    'type': 'ScatterplotLayer',
+                    'data': df_my_loc,
+                    'radius': 500,
+                    'elevationScale': 4,
+                    'elevationRange': [0, 1000],
+                    'pickable': True,
+                    'extruded': True,
+                    'getFillColor': [30,144,255]
+                }])
+            st.write("\n")
+            st.write("\n")
+            st.text("")
+            map_display2.deck_gl_chart(
                 viewport={
                     # 'latitude': user_location.latitude,
                     # 'longitude': user_location.longitude,
@@ -402,10 +475,8 @@ def main():
                     'elevationRange': [0, 1000],
                     'pickable': True,
                     'extruded': True,
-                    'getFillColor': [30,144,255]
+                    'getFillColor': [30, 144, 255]
                 }])
-            st.write("\n")
-            st.write("\n")
             #st.map(df_covid_19_cases_loc_latest)
             # unable to search location
         else:
