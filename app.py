@@ -61,9 +61,16 @@ def getCovid19CasesLatest():
     return df_covid_19_cases
 
 def getLocation():
-    gmaps = googlemaps.Client(key = 'AIzaSyDCkp6UuUj9KnshHK-12gy_A8WQPnL1cHo')
-    geocode_result = gmaps.geolocate()
-    return geocode_result
+    # gmaps = googlemaps.Client(key = 'AIzaSyDCkp6UuUj9KnshHK-12gy_A8WQPnL1cHo')
+    # geocode_result = gmaps.geolocate()
+    #url = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDCkp6UuUj9KnshHK-12gy_A8WQPnL1cHo'
+    url = 'https://www.googleapis.com/geolocation/v1/geolocate'
+    myobj = {'key': 'AIzaSyDCkp6UuUj9KnshHK-12gy_A8WQPnL1cHo'}
+
+    geocode_result = requests.post(url, data=myobj)
+
+    #st.write(geocode_result.text)
+    return geocode_result.json()
 
 def main():
     #title
