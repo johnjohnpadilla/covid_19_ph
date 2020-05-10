@@ -206,12 +206,12 @@ def main():
         chrome_options =  Options()
         chrome_options.binary_location = GOOGLE_CHROME_PATH
         #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        #chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         #chrome_options.headless = False
         #chrome_options.add_argument('--window-size=1920,1480')
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--no-sandbox")
+        # chrome_options.add_argument("--disable-dev-shm-usage")
+        # chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("--no-sandbox")
         #chrome_options.add_argument("--disable-web-security");
         chrome_options.add_argument("--window-position=-200000,-200000")
         # chrome_options.add_argument('--disable-infobars')
