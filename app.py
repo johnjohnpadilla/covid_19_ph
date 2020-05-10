@@ -213,6 +213,9 @@ def main():
         chrome_options.add_argument("disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-web-security");
+        chrome_options.add_argument('disable-infobars')
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.setExperimentalOption("useAutomationExtension", False);
         # chrome_options.add_argument("enable-automation")
         # chrome_options.add_argument("--allow-file-access-from-files");
         # chrome_options.add_argument("--allow-running-insecure-content");
