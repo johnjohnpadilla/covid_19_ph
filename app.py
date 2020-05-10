@@ -200,46 +200,48 @@ def main():
         #heroku configs
         # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
         # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-        # GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
-        # CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
+        GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
+        CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
 
         chrome_options =  Options()
         #chrome_options.binary_location = GOOGLE_CHROME_PATH
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument('--headless')
+        #chrome_options.add_argument('--headless')
+        chrome_options.headless = False
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-web-security");
-        chrome_options.add_argument("--allow-file-access-from-files");
-        chrome_options.add_argument("--allow-running-insecure-content");
-        chrome_options.add_argument("--allow-cross-origin-auth-prompt");
-        chrome_options.add_argument("--allow-file-access");
-        chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--test-type");
-        chrome_options.add_argument("--use--fake-ui-for-media-stream")
-        chrome_options.add_argument("---use-fake-device-for-media-stream")
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--remote-debugging-port=9222')
-        chrome_options.add_argument("--allow-insecure-localhost");
-        chrome_options.add_argument("--disable-user-media-security")
-        chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
-        chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
-        #workaround for issue with headless
+        # chrome_options.add_argument("enable-automation")
+        # chrome_options.add_argument("--allow-file-access-from-files");
+        # chrome_options.add_argument("--allow-running-insecure-content");
+        # chrome_options.add_argument("--allow-cross-origin-auth-prompt");
+        # chrome_options.add_argument("--allow-file-access");
+        # chrome_options.add_argument("--disable-extensions")
+        # chrome_options.add_argument("--test-type");
+        # chrome_options.add_argument("--use--fake-ui-for-media-stream")
+        # chrome_options.add_argument("---use-fake-device-for-media-stream")
+        # chrome_options.add_argument('--ignore-certificate-errors')
+        # chrome_options.add_argument('--remote-debugging-port=9222')
+        # chrome_options.add_argument("--allow-insecure-localhost");
+        # chrome_options.add_argument("--disable-user-media-security")
+        # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
+        # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
+        # #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
         chrome_options.set_capability('acceptInsecureCerts', True)
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
         browser = webdriver.Chrome(options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #aws
-                                   #executable_path=CHROMEDRIVER_PATH,
+                                   executable_path=CHROMEDRIVER_PATH,
                                    #heroku
-                                   executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    desired_capabilities=capabilities)
 
         # //*[@id="latitude"]
@@ -250,6 +252,13 @@ def main():
         # html_file = html_file.replace('\\', '/')
         # browser.get("file:///" + html_file)
         #st.write("file:///" + html_file)
+        # browser.execute_cdp_cmd(
+        #     "Browser.grantPermissions",
+        #     {
+        #         "origin": "https://mycurrentlocation.net/",
+        #         "permissions": ["geolocation"]
+        #     },
+        # )
         browser.get('https://mycurrentlocation.net/')
 
         #browser.get('https://the-internet.herokuapp.com/geolocation')
