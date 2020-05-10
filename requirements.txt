@@ -8,4 +8,10 @@ geocoder==1.38.1
 geopy==1.21.0
 vega-datasets==0.8.0
 selenium==3.141.0
-
+google-api-core==1.16.0
+google-auth==1.11.0
+google-auth-oauthlib==0.4.1
+google-cloud-vision==0.42.0
+google-pasta==0.1.8
+googleapis-common-protos==1.51.0
+googlemaps==4.3.1

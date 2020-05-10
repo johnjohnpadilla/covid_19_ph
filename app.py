@@ -10,6 +10,7 @@ from geopy.distance import geodesic
 import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import googlemaps
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time
@@ -58,6 +59,11 @@ def getCovid19CasesLatest():
     #convert json data to dataframe
     df_covid_19_cases = pd.DataFrame.from_dict(covid_19_json_data, orient='columns')
     return df_covid_19_cases
+
+def getLocation():
+    gmaps = googlemaps.Client(key = 'AIzaSyDCkp6UuUj9KnshHK-12gy_A8WQPnL1cHo')
+    geocode_result = gmaps.geolocate()
+    return geocode_result
 
 def main():
     #title
@@ -197,122 +203,125 @@ def main():
                 #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
     elif choice == "Current Location (Allow Access To Location)":
-        #heroku configs
-        # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
-        # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-        GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
-        CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
 
-        chrome_options =  Options()
-        chrome_options.binary_location = GOOGLE_CHROME_PATH
-        #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        #chrome_options.add_argument('--headless')
-        #chrome_options.headless = False
-        chrome_options.add_argument('--window-size=1920,1480')
-        # chrome_options.add_argument("--disable-dev-shm-usage")
-        # chrome_options.add_argument("--disable-gpu")
-        # chrome_options.add_argument("--no-sandbox")
-        #chrome_options.add_argument("--disable-web-security");
-        chrome_options.add_argument("--window-position=-200000,-200000")
-        # chrome_options.add_argument('--disable-infobars')
-        # chrome_options.add_argument('--disable-extensions')
-        # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        #chrome_options.add_experimental_option('useAutomationExtension', False)
-        #chrome_options.setExperimentalOption("useAutomationExtension", False);
-        # chrome_options.add_argument("enable-automation")
-        # chrome_options.add_argument("--allow-file-access-from-files");
-        # chrome_options.add_argument("--allow-running-insecure-content");
-        # chrome_options.add_argument("--allow-cross-origin-auth-prompt");
-        # chrome_options.add_argument("--allow-file-access");
-        # chrome_options.add_argument("--disable-extensions")
-        # chrome_options.add_argument("--test-type");
-        # chrome_options.add_argument("--use--fake-ui-for-media-stream")
-        # chrome_options.add_argument("---use-fake-device-for-media-stream")
-        # chrome_options.add_argument('--ignore-certificate-errors')
-        # chrome_options.add_argument('--remote-debugging-port=9222')
-        # chrome_options.add_argument("--allow-insecure-localhost");
-        # chrome_options.add_argument("--disable-user-media-security")
-        # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
-        # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
-        # #workaround for issue with headless
-
-        # chrome_options.set_capability('acceptInsecureCerts', True)
-        # capabilities = DesiredCapabilities.CHROME.copy()
-        # capabilities['acceptSslCerts'] = True
-        #capabilities['acceptInsecureCerts'] = True
-        chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome(chrome_options=chrome_options,
-                                   #local
-                                   #executable_path=chrome_driver)
-                                   #aws
-                                    executable_path=CHROMEDRIVER_PATH)
-                                   #heroku
-                                   #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                   #desired_capabilities=capabilities)
-
-        # //*[@id="latitude"]
-        # // *[ @ id = "longitude"]
-        #browser.set_window_size(1920, 1080)
-        #browser.get(os.path.join(os.getcwd(), "test.html"))
-        # html_file = os.getcwd() + "/" + "test.html"
-        # html_file = html_file.replace('\\', '/')
-        # browser.get("file:///" + html_file)
-        #st.write("file:///" + html_file)
-        # browser.execute_cdp_cmd(
-        #     "Browser.grantPermissions",
-        #     {
-        #         "origin": "https://mycurrentlocation.net/",
-        #         "permissions": ["geolocation"]
-        #     },
-        # )
-        browser.get('https://mycurrentlocation.net/')
-
-        #browser.get('https://the-internet.herokuapp.com/geolocation')
-
-        #browser.switch_to_alert().accept()
-        # time.sleep(5)
-        # st.write(browser.page_source.encode("utf-8"))
-        # WebDriverWait(browser, 10).until(
-        #     lambda s: s.find_element_by_id('demo').is_displayed()
-        # )
-
-
-        #browser.get("test.html")
-        #browser.execute_script("getLocation()")
-        web_element: None
-        latitude: None
-        longitude: None
-        counter = 0
-        while counter < 100:
-            try:
-                #//*[@id="lat-value"]
-                longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
-                longitude = [x.text for x in longitude]
-                longitude = str(longitude[0])
-
-                latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
-                latitude = [x.text for x in latitude]
-                latitude = str(latitude[0])
-
-                #st.write(latitude + ":" + longitude)
-                #web_element = browser.find_element_by_id('demo').text
-                counter += 1
-                #st.write('Checking Coordinates...')
-                if longitude and latitude:
-                    break
-            except:
-                break
-
-        browser.close();
-        browser.quit();
+        # st.write(getLocation())
+        # #heroku configs
+        # # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
+        # # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+        # GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
+        # CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
+        #
+        # chrome_options =  Options()
+        # chrome_options.binary_location = GOOGLE_CHROME_PATH
+        # #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # #chrome_options.add_argument('--headless')
+        # #chrome_options.headless = False
+        # chrome_options.add_argument('--window-size=1920,1480')
+        # # chrome_options.add_argument("--disable-dev-shm-usage")
+        # # chrome_options.add_argument("--disable-gpu")
+        # # chrome_options.add_argument("--no-sandbox")
+        # #chrome_options.add_argument("--disable-web-security");
+        # chrome_options.add_argument("--window-position=-200000,-200000")
+        # # chrome_options.add_argument('--disable-infobars')
+        # # chrome_options.add_argument('--disable-extensions')
+        # # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        # #chrome_options.add_experimental_option('useAutomationExtension', False)
+        # #chrome_options.setExperimentalOption("useAutomationExtension", False);
+        # # chrome_options.add_argument("enable-automation")
+        # # chrome_options.add_argument("--allow-file-access-from-files");
+        # # chrome_options.add_argument("--allow-running-insecure-content");
+        # # chrome_options.add_argument("--allow-cross-origin-auth-prompt");
+        # # chrome_options.add_argument("--allow-file-access");
+        # # chrome_options.add_argument("--disable-extensions")
+        # # chrome_options.add_argument("--test-type");
+        # # chrome_options.add_argument("--use--fake-ui-for-media-stream")
+        # # chrome_options.add_argument("---use-fake-device-for-media-stream")
+        # # chrome_options.add_argument('--ignore-certificate-errors')
+        # # chrome_options.add_argument('--remote-debugging-port=9222')
+        # # chrome_options.add_argument("--allow-insecure-localhost");
+        # # chrome_options.add_argument("--disable-user-media-security")
+        # # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
+        # # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
+        # # #workaround for issue with headless
+        #
+        # # chrome_options.set_capability('acceptInsecureCerts', True)
+        # # capabilities = DesiredCapabilities.CHROME.copy()
+        # # capabilities['acceptSslCerts'] = True
+        # #capabilities['acceptInsecureCerts'] = True
+        # chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
+        # browser = webdriver.Chrome(chrome_options=chrome_options,
+        #                            #local
+        #                            executable_path=chrome_driver)
+        #                            #aws
+        #                             #executable_path=CHROMEDRIVER_PATH)
+        #                            #heroku
+        #                            #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+        #                            #desired_capabilities=capabilities)
+        #
+        # # //*[@id="latitude"]
+        # # // *[ @ id = "longitude"]
+        # #browser.set_window_size(1920, 1080)
+        # #browser.get(os.path.join(os.getcwd(), "test.html"))
+        # # html_file = os.getcwd() + "/" + "test.html"
+        # # html_file = html_file.replace('\\', '/')
+        # # browser.get("file:///" + html_file)
+        # #st.write("file:///" + html_file)
+        # # browser.execute_cdp_cmd(
+        # #     "Browser.grantPermissions",
+        # #     {
+        # #         "origin": "https://mycurrentlocation.net/",
+        # #         "permissions": ["geolocation"]
+        # #     },
+        # # )
+        # browser.get('https://mycurrentlocation.net/')
+        #
+        # #browser.get('https://the-internet.herokuapp.com/geolocation')
+        #
+        # #browser.switch_to_alert().accept()
+        # # time.sleep(5)
+        # # st.write(browser.page_source.encode("utf-8"))
+        # # WebDriverWait(browser, 10).until(
+        # #     lambda s: s.find_element_by_id('demo').is_displayed()
+        # # )
+        #
+        #
+        # #browser.get("test.html")
+        # #browser.execute_script("getLocation()")
+        # web_element: None
+        # latitude: None
+        # longitude: None
+        # counter = 0
+        # while counter < 100:
+        #     try:
+        #         #//*[@id="lat-value"]
+        #         longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
+        #         longitude = [x.text for x in longitude]
+        #         longitude = str(longitude[0])
+        #
+        #         latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
+        #         latitude = [x.text for x in latitude]
+        #         latitude = str(latitude[0])
+        #
+        #         #st.write(latitude + ":" + longitude)
+        #         #web_element = browser.find_element_by_id('demo').text
+        #         counter += 1
+        #         #st.write('Checking Coordinates...')
+        #         if longitude and latitude:
+        #             break
+        #     except:
+        #         break
+        #
+        # browser.close();
+        # browser.quit();
         my_loc_lat: None
         my_loc_long: None
-        if longitude and latitude:
+        geocode_result = getLocation()
+        if geocode_result:
             # coordinates = web_element.split(":")
             # my_loc_lat = float(coordinates[0])
             # my_loc_long = float(coordinates[1])
-            my_loc_long = float(longitude)
-            my_loc_lat = float(latitude)
+            my_loc_long = float(geocode_result['location']['lng'])
+            my_loc_lat = float(geocode_result['location']['lat'])
         else:
             my_loc = geocoder.ip('me')
             my_loc_lat = my_loc.latlng[0]
