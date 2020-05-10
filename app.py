@@ -215,7 +215,7 @@ def main():
         chrome_options.add_argument("--disable-web-security");
         chrome_options.add_argument('disable-infobars')
         chrome_options.add_argument('--disable-extensions')
-        chrome_options.setExperimentalOption("useAutomationExtension", False);
+        #chrome_options.setExperimentalOption("useAutomationExtension", False);
         # chrome_options.add_argument("enable-automation")
         # chrome_options.add_argument("--allow-file-access-from-files");
         # chrome_options.add_argument("--allow-running-insecure-content");
@@ -234,6 +234,7 @@ def main():
         # #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
         chrome_options.set_capability('acceptInsecureCerts', True)
+        chrome_options.set_capability('useAutomationExtension', False)
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
