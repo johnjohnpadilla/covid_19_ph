@@ -204,8 +204,8 @@ def main():
         CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
 
         chrome_options =  Options()
-        #chrome_options.binary_location = GOOGLE_CHROME_PATH
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.binary_location = GOOGLE_CHROME_PATH
+        #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         #chrome_options.add_argument('--headless')
         chrome_options.headless = False
         chrome_options.add_argument('--window-size=1920,1480')
@@ -215,6 +215,8 @@ def main():
         chrome_options.add_argument("--disable-web-security");
         chrome_options.add_argument('disable-infobars')
         chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
         #chrome_options.setExperimentalOption("useAutomationExtension", False);
         # chrome_options.add_argument("enable-automation")
         # chrome_options.add_argument("--allow-file-access-from-files");
@@ -234,7 +236,6 @@ def main():
         # #workaround for issue with headless
         chrome_options.add_argument("--window-position=-200000,-200000")
         chrome_options.set_capability('acceptInsecureCerts', True)
-        chrome_options.set_capability('useAutomationExtension', False)
         capabilities = DesiredCapabilities.CHROME.copy()
         capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
