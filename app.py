@@ -210,7 +210,7 @@ def main():
         chrome_options.headless = False
         chrome_options.add_argument('--window-size=1920,1480')
         chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("disable-gpu")
+        chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-web-security");
         chrome_options.add_argument('disable-infobars')
