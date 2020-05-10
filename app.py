@@ -204,16 +204,16 @@ def main():
         CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
 
         chrome_options =  Options()
-        #chrome_options.binary_location = GOOGLE_CHROME_PATH
+        chrome_options.binary_location = GOOGLE_CHROME_PATH
         #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         #chrome_options.add_argument('--headless')
         #chrome_options.headless = False
-        #chrome_options.add_argument('--window-size=1920,1480')
+        chrome_options.add_argument('--window-size=1920,1480')
         # chrome_options.add_argument("--disable-dev-shm-usage")
         # chrome_options.add_argument("--disable-gpu")
         # chrome_options.add_argument("--no-sandbox")
         #chrome_options.add_argument("--disable-web-security");
-        #chrome_options.add_argument("--window-position=-200000,-200000")
+        chrome_options.add_argument("--window-position=-200000,-200000")
         # chrome_options.add_argument('--disable-infobars')
         # chrome_options.add_argument('--disable-extensions')
         # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -241,11 +241,11 @@ def main():
         # capabilities['acceptSslCerts'] = True
         #capabilities['acceptInsecureCerts'] = True
         #chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        browser = webdriver.Chrome()
+        browser = webdriver.Chrome(chrome_options=chrome_options,
                                    #local
                                    #executable_path=chrome_driver,
                                    #aws
-                                   #executable_path=CHROMEDRIVER_PATH)
+                                   executable_path=GOOGLE_CHROME_PATH)
                                    #heroku
                                    #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    #desired_capabilities=capabilities)
