@@ -245,7 +245,7 @@ def main():
                                    #local
                                    #executable_path=chrome_driver,
                                    #aws
-                                   executable_path=GOOGLE_CHROME_PATH)
+                                   executable_path='/usr/bin/chromedriver.exe')
                                    #heroku
                                    #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                    #desired_capabilities=capabilities)
