@@ -72,6 +72,13 @@ def getLocation():
     #st.write(geocode_result.text)
     return geocode_result.json()
 
+def get_client_address():
+    try:
+        #return os.environ.get('HTTP_X_FORWARDED_FOR').split(',')[-1].strip()
+        return os.getenv('HTTP_X_FORWARDED_FOR')
+    except KeyError:
+        return os.getenv('REMOTE_ADDR')
+
 def main():
     #title
     st.markdown("<h3 style='box-shadow: 0 0 25px rgb(179, 182, 180);border-radius: 10px; border: 1px solid black;height:100%;padding: 20px 20px 20px 20px; text-align: center; background-color:#001a33; color:white;'>COVID-19 CASES IN THE PHILIPPINES</h3>", unsafe_allow_html=True)
@@ -248,7 +255,8 @@ def main():
                 #st.markdown("<div style='border: 1px solid black;  word-wrap: break-word; eight:auto;; box-shadow: 0 0 8px rgb(179, 182, 180);border-radius: 12px; height:100%;padding: 20px 20px 20px 20px; background-color: #FFFFFF; color: black;display:block; text-align: start;'><p style='align:'center'><p style='height: 100%; text-align: justify;text-justify: inter-word;'><b>No Location Found...</b></p></div>",unsafe_allow_html=True)
 
     elif choice == "Current Location (Allow Access To Location)":
-
+        ip_address =  get_client_address()
+        st.write(ip_address)
         # st.write(getLocation())
         # #heroku configs
         # # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
