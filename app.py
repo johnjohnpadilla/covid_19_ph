@@ -533,41 +533,41 @@ def main():
         daily_cases_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-            'font': dict(family="Roboto", size=14, color='white')
+            'font': dict(family="Roboto", size=12, color='white')
         })
         st.plotly_chart(daily_cases_fig)
 
         st.write("\n")
-        st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white;'><b>HEALTH STATUS (Outdated)</b></span>",unsafe_allow_html=True)
-        grp_data_health = df_covid_19_cases.copy()
+        st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white;'><b>REGION</b></span>",unsafe_allow_html=True)
+        grp_data_health = df_covid_19_cases_latest.copy()
         grp_data_health['Count'] = 1
         k_health = pd.DataFrame(
-            grp_data_health.groupby(['health_status'], sort=False)['health_status'].count().rename_axis(
-                ["Health Status"]).nlargest(15))
+            grp_data_health.groupby(['region_res'], sort=False)['region_res'].count().rename_axis(
+                ["Region"]).nlargest(15))
         health_status = pd.Series(k_health.index[:])
-        health_status_count = list(k_health['health_status'][:])
-        health_count = pd.DataFrame(list(zip(health_status, health_status_count)), columns=['Health Status', 'Count'])
-        health_fig = px.bar(health_count, x='Health Status', y='Count', color='Count',
-                            labels={'Health Status': '', 'Count': ''}, text = health_status_count)
+        health_status_count = list(k_health['region_res'][:])
+        health_count = pd.DataFrame(list(zip(health_status, health_status_count)), columns=['Region', 'Count'])
+        health_fig = px.bar(health_count, x='Region', y='Count', color='Count',
+                            labels={'Region': '', 'Count': ''}, text = health_status_count)
         health_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
             #'font': dict(family="Courier New, monospace",size=16,color="#7f7f7f")
-            'font': dict(family="Roboto", size=14, color='white')
+            'font': dict(family="Roboto", size=12, color='white')
         })
         st.plotly_chart(health_fig)
 
         # Bar chart to show the Top 15 By Location using plotly
         st.write("\n")
         st.markdown(
-            "<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white;'><b>LOCATION (Outdated)</b></span>",
+            "<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color:; color: white; borer: 1px solid white;'><b>LOCATION</b></span>",
             unsafe_allow_html=True)
-        location_data = df_covid_19_cases.copy()
+        location_data = df_covid_19_cases_latest.copy()
         location_data['Count'] = 1
-        k_location = pd.DataFrame(location_data.groupby(['location'], sort=False)['location'].count().rename_axis(
+        k_location = pd.DataFrame(location_data.groupby(['prov_city_res'], sort=False)['prov_city_res'].count().rename_axis(
             ["Number of Cases Per Location"]).nlargest(15))
         Location = pd.Series(k_location.index[:])
-        Count = list(k_location['location'][:])
+        Count = list(k_location['prov_city_res'][:])
         Location_Count = pd.DataFrame(list(zip(Location, Count)), columns=['Location', 'Count'])
         location_fig = px.bar(Location_Count, x='Location', y='Count', color='Count',
                               labels={'Location': '', 'Count': ''},
@@ -575,7 +575,7 @@ def main():
         location_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-            'font': dict(family="Roboto", size=14, color='white')
+            'font': dict(family="Roboto", size=12, color='white')
         })
         st.plotly_chart(location_fig)
 
@@ -600,7 +600,7 @@ def main():
         travel_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
-            'font': dict(family="Roboto", size=14, color='white')
+            'font': dict(family="Roboto", size=12, color='white')
         })
         st.plotly_chart(travel_fig)
 
