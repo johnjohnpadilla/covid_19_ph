@@ -370,7 +370,8 @@ def main():
         # browser.quit();
         my_loc_lat: None
         my_loc_long: None
-        geocode_result = getLocation()
+        #geocode_result = getLocation()
+        geocode_result = None
         #st.write(geocode_result)
         if geocode_result:
             # coordinates = web_element.split(":")
