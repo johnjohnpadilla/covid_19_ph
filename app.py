@@ -435,6 +435,8 @@ def main():
             my_loc = geocoder.ipinfo(ip)
             my_loc_lat = my_loc.latlng[0]
             my_loc_long = my_loc.latlng[1]
+            user_loc_string = str(my_loc.address)
+            #st.write(my_loc.json)
             #st.write(str(my_loc_lat) + " : " + str(my_loc_long) + " "+ my_loc.city + " " + my_loc.country)
             # st.markdown(
             #     "<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>"+  my_loc.city + ", " + my_loc.country +"</b></span><br>",
@@ -443,6 +445,9 @@ def main():
         st.write("\n")
         st.write("\n")
         st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
+        st.markdown(
+            "<div style='white-space: normal;'><span style='display: inline-block; word-wrap: break-word; border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(
+                user_loc_string) + "</b></span></div><br>", unsafe_allow_html=True)
         # my_loc = geocoder.ip('me')[0]
         # # current location
         # my_loc_lat = my_loc.latlng[0]
