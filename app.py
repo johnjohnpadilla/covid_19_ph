@@ -14,8 +14,13 @@ import googlemaps
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-
+import sqlite3
+from sqlite3 import Error
 import os
+
+
+
+
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -80,7 +85,46 @@ def get_client_address():
         return os.environ.get('REMOTE_ADDR')
         #return os.getenv('REMOTE_ADDR')
 
+# iid = 1
+# def next_id():
+#     global iid
+#     res = iid
+#     iid += 1
+#     return iid
+sessionId = 0
+def getIpAddressFromDB(sessionId):
+    try:
+        #sessionId = sessionId + 1
+        sessionIdString = str(sessionId)
+        #st.write("getIpAddressFromDB:", sessionIdString)
+        db = sqlite3.connect('ip_addresses.db')
+        conn = db.cursor()
+        db.commit()
+
+        # search for sessionID
+        conn.execute("SELECT * FROM ipddresses where sessionIdString='" + str(sessionIdString) + "'")
+        result = conn.fetchone()
+        return result
+        #
+        # # check for record
+        # if result == None:
+        #     # insert in database
+        #     conn.execute("INSERT INTO ipddresses (sessionIdString, ip_address) VALUES(?, ?)", (sessionIdString, ip_address))
+        #     #updatedConvo = conn.execute("SELECT * FROM conversations WHERE sessionId='" + sessionId + "'")
+        #
+        #     db.commit()
+        #     print("Query committed")
+        # close the connection
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
+
 def main():
+    global sessionId
+    sessionId = sessionId + 1
+    #st.write("User Current Session Id: ", sessionId)
     #title
     st.markdown("<h3 style='box-shadow: 0 0 25px rgb(179, 182, 180);border-radius: 10px; border: 1px solid black;height:100%;padding: 20px 20px 20px 20px; text-align: center; background-color:#001a33; color:white;'>COVID-19 CASES IN THE PHILIPPINES</h3>", unsafe_allow_html=True)
     #st.markdown("<br><span style='border-radius: 5px; line-height: 80px ;padding: 5px 5px 5px 5px;  background-color: black; color: white;'><b>COVID-19 CASES IN THE PHILIPPINES</b></span><br>",unsafe_allow_html=True)
@@ -104,10 +148,10 @@ def main():
 
 
     #clean data for plotting else no plots in map
-    #df_covid_19_cases_loc_latest['latitude'] = df_covid_19_cases_loc_latest['latitude'].astype(float)
-    #df_covid_19_cases_loc_latest['longitude'] = df_covid_19_cases_loc_latest['longitude'].astype(float)
-    df_covid_19_cases_loc_latest['latitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['latitude'], errors='coerce')
-    df_covid_19_cases_loc_latest['longitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['longitude'],errors='coerce')
+    df_covid_19_cases_loc_latest['latitude'] = df_covid_19_cases_loc_latest['latitude'].astype(float)
+    df_covid_19_cases_loc_latest['longitude'] = df_covid_19_cases_loc_latest['longitude'].astype(float)
+    #df_covid_19_cases_loc_latest['latitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['latitude'], errors='coerce')
+    #df_covid_19_cases_loc_latest['longitude'] = pd.to_numeric(df_covid_19_cases_loc_latest['longitude'],errors='coerce')
     df_covid_19_cases_loc_latest = df_covid_19_cases_loc_latest.dropna()
 
     nearest_case: None
@@ -368,6 +412,12 @@ def main():
         #
         # browser.close();
         # browser.quit();
+
+        #st.write("Current Location - User Current Session Id: ", sessionId)
+        ip = getIpAddressFromDB(sessionId)
+        ip = str(ip[1])
+        #st.write("IP:", ip)
+
         my_loc_lat: None
         my_loc_long: None
         #geocode_result = getLocation()
@@ -380,9 +430,15 @@ def main():
             my_loc_long = float(geocode_result['location']['lng'])
             my_loc_lat = float(geocode_result['location']['lat'])
         else:
-            my_loc = geocoder.ip('me')
+            #my_loc = geocoder.ipinfo('49.144.120.150')
+            #my_loc = geocoder.ipinfo('me')
+            my_loc = geocoder.ipinfo(ip)
             my_loc_lat = my_loc.latlng[0]
             my_loc_long = my_loc.latlng[1]
+            #st.write(str(my_loc_lat) + " : " + str(my_loc_long) + " "+ my_loc.city + " " + my_loc.country)
+            # st.markdown(
+            #     "<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>"+  my_loc.city + ", " + my_loc.country +"</b></span><br>",
+            #     unsafe_allow_html=True)
 
         st.write("\n")
         st.write("\n")
@@ -544,7 +600,7 @@ def main():
         grp_data_health['Count'] = 1
         k_health = pd.DataFrame(
             grp_data_health.groupby(['region_res'], sort=False)['region_res'].count().rename_axis(
-                ["Region"]).nlargest(15))
+                ["Region"]).nlargest(10))
         health_status = pd.Series(k_health.index[:])
         health_status_count = list(k_health['region_res'][:])
         health_count = pd.DataFrame(list(zip(health_status, health_status_count)), columns=['Region', 'Count'])
@@ -626,3 +682,7 @@ def main():
 
 if __name__ == '__main__' :
     main()
+
+
+
+
