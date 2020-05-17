@@ -17,10 +17,35 @@ import time
 import sqlite3
 from sqlite3 import Error
 import os
+import sqlite3, datetime
+import streamlit.server.SessionState as SessionState
+
+#from streamlit.server.session_states import get_state
+# class MyState:
+#     a: int
+#     b: str
+#
+#     def __init__(self, a: int, b: str):
+#         self.a = a
+#         self.b = b
+#
+#
+# def setup(a: int, b: str) -> MyState:
+#     print('Running setup')
+#     return MyState(a, b)
+#
+#
+# state = get_state(setup, a=3, b='bbb')
+#
+#
+# st.title('Test state')
+# if st.button('Increment'):
+#     state.a = state.a + 1
+#     print(f'Incremented to {state.a}')
+# st.text(state.a)
 
 
-
-
+sessionId = None
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -91,39 +116,67 @@ def get_client_address():
 #     res = iid
 #     iid += 1
 #     return iid
-sessionId = 0
-def getIpAddressFromDB(sessionId):
+
+def getCoordinatesFromDB(sessionId):
     try:
         #sessionId = sessionId + 1
         sessionIdString = str(sessionId)
-        #st.write("getIpAddressFromDB:", sessionIdString)
-        db = sqlite3.connect('ip_addresses.db')
+        db = sqlite3.connect('user_coordinates.db')
         conn = db.cursor()
         db.commit()
 
         # search for sessionID
-        conn.execute("SELECT * FROM ipddresses where sessionIdString='" + str(sessionIdString) + "'")
+        conn.execute("SELECT * FROM user_coordinates where sessionIdString='" + str(sessionIdString) + "'")
         result = conn.fetchone()
         return result
-        #
-        # # check for record
-        # if result == None:
-        #     # insert in database
-        #     conn.execute("INSERT INTO ipddresses (sessionIdString, ip_address) VALUES(?, ?)", (sessionIdString, ip_address))
-        #     #updatedConvo = conn.execute("SELECT * FROM conversations WHERE sessionId='" + sessionId + "'")
-        #
-        #     db.commit()
-        #     print("Query committed")
-        # close the connection
     except Error as e:
         print(e)
     finally:
         if conn:
             conn.close()
 
+
+def getDBCountForSession():
+    try:
+        db = sqlite3.connect('user_coordinates.db')
+        conn = db.cursor()
+        db.commit()
+
+        # search for sessionID
+        conn.execute("SELECT COUNT(*) FROM user_coordinates")
+        count = conn.fetchone()
+        return count
+
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
+
+st.cache(allow_output_mutation=False)
+def getSessionId():
+    global sessionId
+
+    if sessionId is None:
+        sessionId = getDBCountForSession()[0]
+        return sessionId
+    else:
+        return sessionId
+
+# if not hasattr(st, 'global_con'):
+#     st.global_con = getDBCountForSession()[0]
+#
+# sessionId = st.global_con
+
+sessionId = getSessionId()
+session_state = SessionState.get(sessionId=sessionId)
+
+
+#st.write("ALWAYS RUN:", sessionId)
 def main():
     global sessionId
-    sessionId = sessionId + 1
+    #sessionId = sessionId + 1
+
     #st.write("User Current Session Id: ", sessionId)
     #title
     st.markdown("<h3 style='box-shadow: 0 0 25px rgb(179, 182, 180);border-radius: 10px; border: 1px solid black;height:100%;padding: 20px 20px 20px 20px; text-align: center; background-color:#001a33; color:white;'>COVID-19 CASES IN THE PHILIPPINES</h3>", unsafe_allow_html=True)
@@ -232,15 +285,16 @@ def main():
                         'mapStyle': 'mapbox://styles/mapbox/satellite-v9'
                     },
                     layers=[{
-                        'type': 'ScatterplotLayer',
+                        'type': 'PointCloudLayer',
                         'data': df_covid_19_cases_loc_latest,
-                        'radius': 3000,
+                        'radius': 200,
                         'elevationScale': 4,
                         'elevationRange': [0, 1000],
                         'pickable': True,
                         'extruded': True,
                         'getFillColor': [255, 8, 0],
-                        'tooltip ': True
+                        'tooltip': True,
+                        'hover': 'TEST'
                     },
                     {
                         'type': 'ScatterplotLayer',
@@ -303,139 +357,34 @@ def main():
 
     elif choice == "Current Location (Allow Access To Location)":
 
-        # st.write(getLocation())
-        # #heroku configs
-        # # GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
-        # # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-        # GOOGLE_CHROME_PATH = '/usr/bin/google-chrome'
-        # CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
-        #
-        # chrome_options =  Options()
-        # chrome_options.binary_location = GOOGLE_CHROME_PATH
-        # #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        # #chrome_options.add_argument('--headless')
-        # #chrome_options.headless = False
-        # chrome_options.add_argument('--window-size=1920,1480')
-        # # chrome_options.add_argument("--disable-dev-shm-usage")
-        # # chrome_options.add_argument("--disable-gpu")
-        # # chrome_options.add_argument("--no-sandbox")
-        # #chrome_options.add_argument("--disable-web-security");
-        # chrome_options.add_argument("--window-position=-200000,-200000")
-        # # chrome_options.add_argument('--disable-infobars')
-        # # chrome_options.add_argument('--disable-extensions')
-        # # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        # #chrome_options.add_experimental_option('useAutomationExtension', False)
-        # #chrome_options.setExperimentalOption("useAutomationExtension", False);
-        # # chrome_options.add_argument("enable-automation")
-        # # chrome_options.add_argument("--allow-file-access-from-files");
-        # # chrome_options.add_argument("--allow-running-insecure-content");
-        # # chrome_options.add_argument("--allow-cross-origin-auth-prompt");
-        # # chrome_options.add_argument("--allow-file-access");
-        # # chrome_options.add_argument("--disable-extensions")
-        # # chrome_options.add_argument("--test-type");
-        # # chrome_options.add_argument("--use--fake-ui-for-media-stream")
-        # # chrome_options.add_argument("---use-fake-device-for-media-stream")
-        # # chrome_options.add_argument('--ignore-certificate-errors')
-        # # chrome_options.add_argument('--remote-debugging-port=9222')
-        # # chrome_options.add_argument("--allow-insecure-localhost");
-        # # chrome_options.add_argument("--disable-user-media-security")
-        # # chrome_options.add_argument("--unsafely-treat-insecure-origin-as-secure")
-        # # chrome_options.add_experimental_option('prefs', {'profile.default_content_setting_values.notifications': 1})
-        # # #workaround for issue with headless
-        #
-        # # chrome_options.set_capability('acceptInsecureCerts', True)
-        # # capabilities = DesiredCapabilities.CHROME.copy()
-        # # capabilities['acceptSslCerts'] = True
-        # #capabilities['acceptInsecureCerts'] = True
-        # chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
-        # browser = webdriver.Chrome(chrome_options=chrome_options,
-        #                            #local
-        #                            executable_path=chrome_driver)
-        #                            #aws
-        #                             #executable_path=CHROMEDRIVER_PATH)
-        #                            #heroku
-        #                            #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-        #                            #desired_capabilities=capabilities)
-        #
-        # # //*[@id="latitude"]
-        # # // *[ @ id = "longitude"]
-        # #browser.set_window_size(1920, 1080)
-        # #browser.get(os.path.join(os.getcwd(), "test.html"))
-        # # html_file = os.getcwd() + "/" + "test.html"
-        # # html_file = html_file.replace('\\', '/')
-        # # browser.get("file:///" + html_file)
-        # #st.write("file:///" + html_file)
-        # # browser.execute_cdp_cmd(
-        # #     "Browser.grantPermissions",
-        # #     {
-        # #         "origin": "https://mycurrentlocation.net/",
-        # #         "permissions": ["geolocation"]
-        # #     },
-        # # )
-        # browser.get('https://mycurrentlocation.net/')
-        #
-        # #browser.get('https://the-internet.herokuapp.com/geolocation')
-        #
-        # #browser.switch_to_alert().accept()
-        # # time.sleep(5)
-        # # st.write(browser.page_source.encode("utf-8"))
-        # # WebDriverWait(browser, 10).until(
-        # #     lambda s: s.find_element_by_id('demo').is_displayed()
-        # # )
-        #
-        #
-        # #browser.get("test.html")
-        # #browser.execute_script("getLocation()")
-        # web_element: None
-        # latitude: None
-        # longitude: None
-        # counter = 0
-        # while counter < 100:
-        #     try:
-        #         #//*[@id="lat-value"]
-        #         longitude = browser.find_elements_by_xpath('// *[ @ id = "longitude"]')
-        #         longitude = [x.text for x in longitude]
-        #         longitude = str(longitude[0])
-        #
-        #         latitude = browser.find_elements_by_xpath('//*[@id="latitude"]')
-        #         latitude = [x.text for x in latitude]
-        #         latitude = str(latitude[0])
-        #
-        #         #st.write(latitude + ":" + longitude)
-        #         #web_element = browser.find_element_by_id('demo').text
-        #         counter += 1
-        #         #st.write('Checking Coordinates...')
-        #         if longitude and latitude:
-        #             break
-        #     except:
-        #         break
-        #
-        # browser.close();
-        # browser.quit();
 
-        #st.write("Current Location - User Current Session Id: ", sessionId)
-        ip = getIpAddressFromDB(sessionId)
-        ip = str(ip[1])
-        #st.write("IP:", ip)
+        #st.write("FIRST VALUE OF SESSIONID: ", sessionId)
+        # if sessionId is not None:
+        #     sessionId = getDBCountForSession()
+        #     st.write("Current Location - User Current Session Id: ", sessionId[0])
+
+        #sessionId = getSessionId()
+        coordinates = getCoordinatesFromDB(session_state.sessionId)
 
         my_loc_lat: None
         my_loc_long: None
         #geocode_result = getLocation()
         geocode_result = None
         #st.write(geocode_result)
-        if geocode_result:
+        if coordinates:
             # coordinates = web_element.split(":")
-            # my_loc_lat = float(coordinates[0])
-            # my_loc_long = float(coordinates[1])
-            my_loc_long = float(geocode_result['location']['lng'])
-            my_loc_lat = float(geocode_result['location']['lat'])
+            my_loc_lat = float(coordinates[1])
+            my_loc_long = float(coordinates[2])
+            # my_loc_long = float(geocode_result['location']['lng'])
+            # my_loc_lat = float(geocode_result['location']['lat'])
         else:
             #my_loc = geocoder.ipinfo('49.144.120.150')
-            #my_loc = geocoder.ipinfo('me')
-            my_loc = geocoder.ipinfo(ip)
-            my_loc_lat = my_loc.latlng[0]
-            my_loc_long = my_loc.latlng[1]
-            user_loc_string = str(my_loc.address)
+            my_loc = geocoder.ipinfo('me')
+            #my_loc = geocoder.ipinfo(ip)
+
+            # my_loc_lat = float(latitude)
+            # my_loc_long = float(longitude)
+            # user_loc_string = str(my_loc.address)
             #st.write(my_loc.json)
             #st.write(str(my_loc_lat) + " : " + str(my_loc_long) + " "+ my_loc.city + " " + my_loc.country)
             # st.markdown(
@@ -445,9 +394,9 @@ def main():
         st.write("\n")
         st.write("\n")
         st.markdown("<br><span style='border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px;  background-color:; color: white;'><b>MAP VIEW</b></span><br>",unsafe_allow_html=True)
-        st.markdown(
-            "<div style='white-space: normal;'><span style='display: inline-block; word-wrap: break-word; border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(
-                user_loc_string) + "</b></span></div><br>", unsafe_allow_html=True)
+        # st.markdown(
+        #     "<div style='white-space: normal;'><span style='display: inline-block; word-wrap: break-word; border-radius: 5px; line-height: 40px ;padding: 5px 5px 5px 5px; background-color: green; color: white; border: 1px solid white;'><b>LOCATION: " + str(
+        #         user_loc_string) + "</b></span></div><br>", unsafe_allow_html=True)
         # my_loc = geocoder.ip('me')[0]
         # # current location
         # my_loc_lat = my_loc.latlng[0]
@@ -484,6 +433,7 @@ def main():
             df_my_loc = pd.DataFrame(np.array([[my_loc_lat, my_loc_long]]))
             df_my_loc.columns = ['latitude', 'longitude']
             st.write("\n")
+            st.spinner('Wait for it...')
             map_display = st.info("Loading...")
             map_display2 = st.info("Loading...")
             map_display.deck_gl_chart(
@@ -498,7 +448,7 @@ def main():
 
                 },
                 layers=[{
-                    'type': 'ScatterplotLayer',
+                    'type': 'PointCloudLayer',
                     'data': df_covid_19_cases_loc_latest,
                     'radius': 200,
                     'elevationScale': 4,
